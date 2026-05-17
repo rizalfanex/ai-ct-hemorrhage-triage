@@ -1,0 +1,11 @@
+{
+  "model_name": "efficientnet_b0",
+  "epochs": 8,
+  "image_size": 224,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "best_any_auc": 0.904689,
+  "training_time_seconds": 1144.32,
+  "best_checkpoint": "outputs\\models\\best_efficientnet_b0_rsna_10000.pt",
+  "last_checkpoint": "outputs\\models\\last_efficientnet_b0_rsna_10000.pt"
+}

@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+venv/
+conda-meta/
+
+# Raw and processed medical data
+data/
+*.dcm
+*.dicom
+*.nii
+*.nii.gz
+*.zip
+
+# Model checkpoints
+outputs/models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Patient-derived / medical visualizations
+outputs/figures/gradcam_model10000/
+outputs/figures/paper_ready/figure_gradcam*
+outputs/figures/real_dicom_windowing/
+outputs/figures/test_ct_windowing.png
+outputs/figures/test_multi_window_rgb.png
+
+# Prediction files with image-level IDs
+outputs/logs/*predictions*.csv
+
+# Temporary logs
+outputs/logs/*.tmp
+outputs/logs/*.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

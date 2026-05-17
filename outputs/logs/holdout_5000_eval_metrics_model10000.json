@@ -1,0 +1,98 @@
+{
+  "manifest": "data\\processed\\rsna_holdout_5000_manifest.csv",
+  "checkpoint": "outputs\\models\\best_efficientnet_b0_rsna_10000.pt",
+  "checkpoint_epoch": 7,
+  "holdout_size": 5000,
+  "holdout_any_prevalence": 0.1402,
+  "per_label": {
+    "any": {
+      "positive_count": 701,
+      "negative_count": 4299,
+      "prevalence": 0.1402,
+      "auc": 0.9164457514088636,
+      "average_precision": 0.7097307273631884
+    },
+    "epidural": {
+      "positive_count": 17,
+      "negative_count": 4983,
+      "prevalence": 0.0034,
+      "auc": 0.7495838793072918,
+      "average_precision": 0.07439583757094773
+    },
+    "intraparenchymal": {
+      "positive_count": 254,
+      "negative_count": 4746,
+      "prevalence": 0.0508,
+      "auc": 0.9112597097929129,
+      "average_precision": 0.6316264832970391
+    },
+    "intraventricular": {
+      "positive_count": 160,
+      "negative_count": 4840,
+      "prevalence": 0.032,
+      "auc": 0.943907541322314,
+      "average_precision": 0.6490518753201949
+    },
+    "subarachnoid": {
+      "positive_count": 234,
+      "negative_count": 4766,
+      "prevalence": 0.0468,
+      "auc": 0.8392414574747766,
+      "average_precision": 0.2825764790374323
+    },
+    "subdural": {
+      "positive_count": 301,
+      "negative_count": 4699,
+      "prevalence": 0.0602,
+      "auc": 0.874984357313601,
+      "average_precision": 0.4507626686946126
+    }
+  },
+  "best_f1_threshold_any": {
+    "threshold": 0.9,
+    "tn": 3979.0,
+    "fp": 320.0,
+    "fn": 216.0,
+    "tp": 485.0,
+    "predicted_positive": 805.0,
+    "predicted_positive_rate": 0.161,
+    "precision": 0.6024844720496895,
+    "recall": 0.6918687589158345,
+    "f1": 0.6440903054448871,
+    "false_negative_rate": 0.30813124108416545,
+    "false_positive_rate": 0.07443591532914631
+  },
+  "best_threshold_with_recall_at_least_90": {
+    "threshold": 0.25,
+    "tn": 3162.0,
+    "fp": 1137.0,
+    "fn": 64.0,
+    "tp": 637.0,
+    "predicted_positive": 1774.0,
+    "predicted_positive_rate": 0.3548,
+    "precision": 0.35907553551296506,
+    "recall": 0.9087018544935807,
+    "f1": 0.5147474747474747,
+    "false_negative_rate": 0.0912981455064194,
+    "false_positive_rate": 0.264480111653873
+  },
+  "best_threshold_with_recall_at_least_95": {
+    "threshold": 0.05,
+    "tn": 2402.0,
+    "fp": 1897.0,
+    "fn": 20.0,
+    "tp": 681.0,
+    "predicted_positive": 2578.0,
+    "predicted_positive_rate": 0.5156,
+    "precision": 0.26415826221877425,
+    "recall": 0.9714693295292439,
+    "f1": 0.41537053979871913,
+    "false_negative_rate": 0.028530670470756064,
+    "false_positive_rate": 0.4412654105605955
+  },
+  "outputs": {
+    "predictions_csv": "outputs\\logs\\holdout_5000_predictions_model10000.csv",
+    "threshold_csv": "outputs\\logs\\holdout_5000_threshold_sweep_any_model10000.csv",
+    "triage_csv": "outputs\\logs\\holdout_5000_triage_simulation_model10000.csv"
+  }
+}
