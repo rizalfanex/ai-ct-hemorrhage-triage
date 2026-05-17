@@ -1,0 +1,39 @@
+{
+  "any_roc_pr": {
+    "roc_auc": 0.9164457514088636,
+    "average_precision": 0.7097307273631884,
+    "roc_path": "outputs\\figures\\paper_metrics\\roc_curve_any_model10000.png",
+    "pr_path": "outputs\\figures\\paper_metrics\\pr_curve_any_model10000.png"
+  },
+  "calibration": {
+    "brier_score": 0.13812136497234773,
+    "calibration_csv": "outputs\\reports\\calibration_curve_any_model10000.csv",
+    "calibration_figure": "outputs\\figures\\paper_metrics\\calibration_curve_any_model10000.png"
+  },
+  "confusion_matrices": {
+    "triage_recall90_threshold_025": {
+      "threshold": 0.25,
+      "tn": 3162,
+      "fp": 1137,
+      "fn": 64,
+      "tp": 637,
+      "precision": 0.35907553551296506,
+      "recall": 0.9087018544935807,
+      "false_negative_rate": 0.0912981455064194,
+      "false_positive_rate": 0.264480111653873,
+      "figure": "outputs\\figures\\paper_metrics\\confusion_matrix_any_triage_recall90_threshold_025.png"
+    },
+    "best_f1_threshold_090": {
+      "threshold": 0.9,
+      "tn": 3979,
+      "fp": 320,
+      "fn": 216,
+      "tp": 485,
+      "precision": 0.6024844720496895,
+      "recall": 0.6918687589158345,
+      "false_negative_rate": 0.30813124108416545,
+      "false_positive_rate": 0.07443591532914631,
+      "figure": "outputs\\figures\\paper_metrics\\confusion_matrix_any_best_f1_threshold_090.png"
+    }
+  }
+}
