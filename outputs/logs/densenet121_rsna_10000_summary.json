@@ -1,0 +1,13 @@
+{
+  "experiment_name": "densenet121_rsna_10000",
+  "model_name": "densenet121",
+  "epochs": 8,
+  "image_size": 224,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "best_any_auc": 0.925171,
+  "training_time_seconds": 1163.08,
+  "parameters": 6960006,
+  "best_checkpoint": "outputs\\models\\best_densenet121_rsna_10000.pt",
+  "last_checkpoint": "outputs\\models\\last_densenet121_rsna_10000.pt"
+}

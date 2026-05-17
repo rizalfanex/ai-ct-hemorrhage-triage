@@ -1,0 +1,102 @@
+{
+  "manifest": "data\\processed\\rsna_holdout_5000_manifest.csv",
+  "checkpoint": "outputs\\models\\best_densenet121_rsna_10000.pt",
+  "checkpoint_epoch": 3,
+  "checkpoint_validation_any_auc": 0.925171,
+  "model_name": "densenet121",
+  "experiment_name": "densenet121_rsna_10000",
+  "parameters": 6960006,
+  "holdout_size": 5000,
+  "holdout_any_prevalence": 0.1402,
+  "per_label": {
+    "any": {
+      "positive_count": 701,
+      "negative_count": 4299,
+      "prevalence": 0.1402,
+      "auc": 0.9364761204128352,
+      "average_precision": 0.7815546469517965
+    },
+    "epidural": {
+      "positive_count": 17,
+      "negative_count": 4983,
+      "prevalence": 0.0034,
+      "auc": 0.8842653256365761,
+      "average_precision": 0.08945393850787398
+    },
+    "intraparenchymal": {
+      "positive_count": 254,
+      "negative_count": 4746,
+      "prevalence": 0.0508,
+      "auc": 0.9652886309565287,
+      "average_precision": 0.7745108867281927
+    },
+    "intraventricular": {
+      "positive_count": 160,
+      "negative_count": 4840,
+      "prevalence": 0.032,
+      "auc": 0.983363894628099,
+      "average_precision": 0.7731684020365112
+    },
+    "subarachnoid": {
+      "positive_count": 234,
+      "negative_count": 4766,
+      "prevalence": 0.0468,
+      "auc": 0.9270285246995276,
+      "average_precision": 0.4982941380407241
+    },
+    "subdural": {
+      "positive_count": 301,
+      "negative_count": 4699,
+      "prevalence": 0.0602,
+      "auc": 0.8950692131428261,
+      "average_precision": 0.47988200794451985
+    }
+  },
+  "best_f1_threshold_any": {
+    "threshold": 0.85,
+    "tn": 4109.0,
+    "fp": 190.0,
+    "fn": 212.0,
+    "tp": 489.0,
+    "predicted_positive": 679.0,
+    "predicted_positive_rate": 0.1358,
+    "precision": 0.7201767304860088,
+    "recall": 0.6975748930099858,
+    "f1": 0.7086956521739131,
+    "false_negative_rate": 0.3024251069900143,
+    "false_positive_rate": 0.04419632472668062
+  },
+  "best_threshold_with_recall_at_least_90": {
+    "threshold": 0.35,
+    "tn": 3231.0,
+    "fp": 1068.0,
+    "fn": 63.0,
+    "tp": 638.0,
+    "predicted_positive": 1706.0,
+    "predicted_positive_rate": 0.3412,
+    "precision": 0.37397420867526376,
+    "recall": 0.9101283880171184,
+    "f1": 0.5301204819277109,
+    "false_negative_rate": 0.0898716119828816,
+    "false_positive_rate": 0.24842986741102582
+  },
+  "best_threshold_with_recall_at_least_95": {
+    "threshold": 0.2,
+    "tn": 2820.0,
+    "fp": 1479.0,
+    "fn": 30.0,
+    "tp": 671.0,
+    "predicted_positive": 2150.0,
+    "predicted_positive_rate": 0.43,
+    "precision": 0.31209302325581395,
+    "recall": 0.9572039942938659,
+    "f1": 0.4707120308663627,
+    "false_negative_rate": 0.042796005706134094,
+    "false_positive_rate": 0.3440334961618981
+  },
+  "outputs": {
+    "predictions_csv": "outputs\\logs\\holdout_5000_predictions_densenet121_10000.csv",
+    "threshold_csv": "outputs\\logs\\holdout_5000_threshold_sweep_any_densenet121_10000.csv",
+    "triage_csv": "outputs\\logs\\holdout_5000_triage_simulation_densenet121_10000.csv"
+  }
+}
