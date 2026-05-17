@@ -1,0 +1,6 @@
+subtype,positive_count_in_holdout,captured_count_at_threshold,missed_count_at_threshold,miss_rate_within_subtype,capture_rate_within_subtype
+epidural,17,14,3,0.17647058823529413,0.8235294117647058
+intraparenchymal,254,240,14,0.05511811023622047,0.9448818897637795
+intraventricular,160,153,7,0.04375,0.95625
+subarachnoid,234,214,20,0.08547008547008547,0.9145299145299145
+subdural,301,274,27,0.08970099667774087,0.9102990033222591

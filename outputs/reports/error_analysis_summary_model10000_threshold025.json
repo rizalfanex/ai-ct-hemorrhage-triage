@@ -1,0 +1,117 @@
+{
+  "threshold": 0.25,
+  "prediction_csv": "outputs\\logs\\holdout_5000_predictions_model10000.csv",
+  "confusion_matrix": {
+    "tn": 3162,
+    "fp": 1137,
+    "fn": 64,
+    "tp": 637
+  },
+  "metrics": {
+    "threshold": 0.25,
+    "tn": 3162,
+    "fp": 1137,
+    "fn": 64,
+    "tp": 637,
+    "precision": 0.35907553551296506,
+    "recall": 0.9087018544935807,
+    "false_negative_rate": 0.0912981455064194,
+    "false_positive_rate": 0.264480111653873,
+    "prioritized_workload_rate": 0.3548
+  },
+  "error_group_counts": {
+    "true_negative": 3162,
+    "false_positive": 1137,
+    "true_positive": 637,
+    "false_negative": 64
+  },
+  "probability_distribution_by_group": [
+    {
+      "error_group": "false_negative",
+      "count": 64,
+      "prob_mean": 0.09727403334181868,
+      "prob_std": 0.06920596383565474,
+      "prob_min": 0.0028639661613851,
+      "prob_p25": 0.043459342792630154,
+      "prob_median": 0.0818661078810691,
+      "prob_p75": 0.13605907186865807,
+      "prob_max": 0.2424929141998291
+    },
+    {
+      "error_group": "false_positive",
+      "count": 1137,
+      "prob_mean": 0.6815989740133914,
+      "prob_std": 0.24554257933084545,
+      "prob_min": 0.2500416934490204,
+      "prob_p25": 0.4496653079986572,
+      "prob_median": 0.7065958380699158,
+      "prob_p75": 0.9259856939315796,
+      "prob_max": 0.9999791383743286
+    },
+    {
+      "error_group": "true_negative",
+      "count": 3162,
+      "prob_mean": 0.03731650017026944,
+      "prob_std": 0.05552915031283631,
+      "prob_min": 8.368549515580526e-07,
+      "prob_p25": 0.002568110357969975,
+      "prob_median": 0.0108463452197611,
+      "prob_p75": 0.047711100429296424,
+      "prob_max": 0.247611790895462
+    },
+    {
+      "error_group": "true_positive",
+      "count": 637,
+      "prob_mean": 0.9011463747013307,
+      "prob_std": 0.18153621149429197,
+      "prob_min": 0.2576440274715423,
+      "prob_p25": 0.9147982001304626,
+      "prob_median": 0.9922001957893372,
+      "prob_p75": 0.999390721321106,
+      "prob_max": 1.0
+    }
+  ],
+  "false_negative_subtype_summary": [
+    {
+      "subtype": "epidural",
+      "positive_count_in_holdout": 17,
+      "captured_count_at_threshold": 14,
+      "missed_count_at_threshold": 3,
+      "miss_rate_within_subtype": 0.17647058823529413,
+      "capture_rate_within_subtype": 0.8235294117647058
+    },
+    {
+      "subtype": "intraparenchymal",
+      "positive_count_in_holdout": 254,
+      "captured_count_at_threshold": 240,
+      "missed_count_at_threshold": 14,
+      "miss_rate_within_subtype": 0.05511811023622047,
+      "capture_rate_within_subtype": 0.9448818897637795
+    },
+    {
+      "subtype": "intraventricular",
+      "positive_count_in_holdout": 160,
+      "captured_count_at_threshold": 153,
+      "missed_count_at_threshold": 7,
+      "miss_rate_within_subtype": 0.04375,
+      "capture_rate_within_subtype": 0.95625
+    },
+    {
+      "subtype": "subarachnoid",
+      "positive_count_in_holdout": 234,
+      "captured_count_at_threshold": 214,
+      "missed_count_at_threshold": 20,
+      "miss_rate_within_subtype": 0.08547008547008547,
+      "capture_rate_within_subtype": 0.9145299145299145
+    },
+    {
+      "subtype": "subdural",
+      "positive_count_in_holdout": 301,
+      "captured_count_at_threshold": 274,
+      "missed_count_at_threshold": 27,
+      "miss_rate_within_subtype": 0.08970099667774087,
+      "capture_rate_within_subtype": 0.9102990033222591
+    }
+  ],
+  "private_case_file_not_for_github": "outputs\\error_analysis\\private\\error_cases_with_image_ids_threshold025.csv"
+}

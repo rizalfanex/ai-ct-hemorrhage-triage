@@ -1,0 +1,2 @@
+threshold,tn,fp,fn,tp,precision,recall,false_negative_rate,false_positive_rate,prioritized_workload_rate
+0.25,3162,1137,64,637,0.35907553551296506,0.9087018544935807,0.0912981455064194,0.264480111653873,0.3548

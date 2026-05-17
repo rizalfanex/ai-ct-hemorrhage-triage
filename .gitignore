@@ -45,3 +45,7 @@ outputs/logs/*.log
 Thumbs.db
 .vscode/
 .idea/
+
+# Private error analysis with image-level IDs
+outputs/error_analysis/private/
+outputs/error_analysis/*cases*.csv
