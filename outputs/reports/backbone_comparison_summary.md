@@ -6,6 +6,7 @@
 |:----------------|-------------:|---------------:|-------------------------:|--------------:|------------------------:|--------------------------:|------------------:|--------------------------------:|--------------------:|----------:|---------------------:|---------------------:|------------------:|-------------------------------:|-----------------------------------:|
 | EfficientNet-B0 |        10000 |           5000 |                   0.1402 | nan           |                 1144.32 |                  0.904689 |          0.916446 |                        0.709731 |                0.9  |  0.64409  |                 0.25 |             0.359076 |          0.908702 |                      0.0912981 |                             0.3548 |
 | DenseNet121     |        10000 |           5000 |                   0.1402 |   6.96001e+06 |                 1163.08 |                  0.925171 |          0.936476 |                        0.781555 |                0.85 |  0.708696 |                 0.35 |             0.373974 |          0.910128 |                      0.0898716 |                             0.3412 |
+| ConvNeXt-Tiny   |        10000 |           5000 |                   0.1402 |   2.78247e+07 |                 1145.25 |                  0.930487 |          0.945789 |                        0.816036 |                0.65 |  0.742898 |                 0.1  |             0.402589 |          0.931526 |                      0.0684736 |                             0.3244 |
 
 ## Per-Label AUC/AP
 
@@ -23,13 +24,19 @@
 | DenseNet121     | intraventricular |              160 |       0.032  | 0.983364 |           0.773168  |
 | DenseNet121     | subarachnoid     |              234 |       0.0468 | 0.927029 |           0.498294  |
 | DenseNet121     | subdural         |              301 |       0.0602 | 0.895069 |           0.479882  |
+| ConvNeXt-Tiny   | any              |              701 |       0.1402 | 0.945789 |           0.816036  |
+| ConvNeXt-Tiny   | epidural         |               17 |       0.0034 | 0.938839 |           0.0562137 |
+| ConvNeXt-Tiny   | intraparenchymal |              254 |       0.0508 | 0.970937 |           0.770624  |
+| ConvNeXt-Tiny   | intraventricular |              160 |       0.032  | 0.990244 |           0.847204  |
+| ConvNeXt-Tiny   | subarachnoid     |              234 |       0.0468 | 0.92674  |           0.498531  |
+| ConvNeXt-Tiny   | subdural         |              301 |       0.0602 | 0.914619 |           0.597648  |
 
 ## Interpretation
 
-- DenseNet121 outperformed EfficientNet-B0 on the natural-prevalence holdout set.
-- DenseNet121 improved any-hemorrhage AUC and average precision.
-- DenseNet121 required lower prioritized workload to achieve approximately 90% recall.
-- This supports including DenseNet121 as the current best-performing backbone in the manuscript.
+- ConvNeXt-Tiny achieved the strongest natural-prevalence holdout performance among the evaluated backbones.
+- ConvNeXt-Tiny improved any-hemorrhage AUC and average precision over EfficientNet-B0 and DenseNet121.
+- ConvNeXt-Tiny achieved the best high-sensitivity triage trade-off among the evaluated backbones.
+- This supports using ConvNeXt-Tiny as the current primary backbone while retaining DenseNet121 as a strong comparator.
 
 ## Generated Figures
 

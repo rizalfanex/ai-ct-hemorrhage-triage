@@ -19,13 +19,19 @@ MODEL_FILES = [
         "holdout_metrics": LOG_DIR / "holdout_5000_eval_metrics_model10000.json",
         "threshold_csv": LOG_DIR / "holdout_5000_threshold_sweep_any_model10000.csv",
         "triage_csv": LOG_DIR / "holdout_5000_triage_simulation_model10000.csv",
-    },
-    {
+    },    {
         "model_display": "DenseNet121",
         "train_summary": LOG_DIR / "densenet121_rsna_10000_summary.json",
         "holdout_metrics": LOG_DIR / "holdout_5000_eval_metrics_densenet121_10000.json",
         "threshold_csv": LOG_DIR / "holdout_5000_threshold_sweep_any_densenet121_10000.csv",
         "triage_csv": LOG_DIR / "holdout_5000_triage_simulation_densenet121_10000.csv",
+    },
+    {
+        "model_display": "ConvNeXt-Tiny",
+        "train_summary": LOG_DIR / "convnext_tiny_rsna_10000_summary.json",
+        "holdout_metrics": LOG_DIR / "holdout_5000_eval_metrics_convnext_tiny_10000.json",
+        "threshold_csv": LOG_DIR / "holdout_5000_threshold_sweep_any_convnext_tiny_10000.csv",
+        "triage_csv": LOG_DIR / "holdout_5000_triage_simulation_convnext_tiny_10000.csv",
     },
 ]
 
@@ -193,10 +199,10 @@ def main() -> None:
     lines.append("")
     lines.append("## Interpretation")
     lines.append("")
-    lines.append("- DenseNet121 outperformed EfficientNet-B0 on the natural-prevalence holdout set.")
-    lines.append("- DenseNet121 improved any-hemorrhage AUC and average precision.")
-    lines.append("- DenseNet121 required lower prioritized workload to achieve approximately 90% recall.")
-    lines.append("- This supports including DenseNet121 as the current best-performing backbone in the manuscript.")
+    lines.append("- ConvNeXt-Tiny achieved the strongest natural-prevalence holdout performance among the evaluated backbones.")
+    lines.append("- ConvNeXt-Tiny improved any-hemorrhage AUC and average precision over EfficientNet-B0 and DenseNet121.")
+    lines.append("- ConvNeXt-Tiny achieved the best high-sensitivity triage trade-off among the evaluated backbones.")
+    lines.append("- This supports using ConvNeXt-Tiny as the current primary backbone while retaining DenseNet121 as a strong comparator.")
     lines.append("")
     lines.append("## Generated Figures")
     lines.append("")
@@ -218,3 +224,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
