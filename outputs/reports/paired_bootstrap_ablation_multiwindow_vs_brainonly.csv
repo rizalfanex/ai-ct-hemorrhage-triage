@@ -1,0 +1,3 @@
+comparison,metric,multi_window_value,brain_only_value,difference,difference_ci_low,difference_ci_high,bootstrap_p_value,n_bootstrap
+multi_window_minus_brain_only,auc,0.9457890714723491,0.9471940361010208,-0.0014049646286716788,-0.007415203548979132,0.005062509975613998,0.646,2000
+multi_window_minus_brain_only,average_precision,0.816036290036051,0.81537707291167,0.0006592171243809952,-0.013115359318640003,0.014697430162224577,0.929,2000
