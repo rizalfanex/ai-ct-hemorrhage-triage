@@ -1,0 +1,14 @@
+{
+  "experiment_name": "convnext_tiny_brain_only_rsna_10000",
+  "model_name": "convnext_tiny",
+  "ablation": "brain_window_only_repeated_3_channels",
+  "epochs": 8,
+  "image_size": 224,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "best_any_auc": 0.9336139999999999,
+  "training_time_seconds": 1197.27,
+  "parameters": 27824742,
+  "best_checkpoint": "outputs\\models\\best_convnext_tiny_brain_only_rsna_10000.pt",
+  "last_checkpoint": "outputs\\models\\last_convnext_tiny_brain_only_rsna_10000.pt"
+}

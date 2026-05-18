@@ -1,0 +1,103 @@
+{
+  "manifest": "data\\processed\\rsna_holdout_5000_manifest.csv",
+  "checkpoint": "outputs\\models\\best_convnext_tiny_brain_only_rsna_10000.pt",
+  "checkpoint_epoch": 4,
+  "checkpoint_validation_any_auc": 0.9336139999999999,
+  "model_name": "convnext_tiny",
+  "experiment_name": "convnext_tiny_brain_only_rsna_10000",
+  "ablation": "brain_window_only_repeated_3_channels",
+  "parameters": 27824742,
+  "holdout_size": 5000,
+  "holdout_any_prevalence": 0.1402,
+  "per_label": {
+    "any": {
+      "positive_count": 701,
+      "negative_count": 4299,
+      "prevalence": 0.1402,
+      "auc": 0.9471940361010208,
+      "average_precision": 0.81537707291167
+    },
+    "epidural": {
+      "positive_count": 17,
+      "negative_count": 4983,
+      "prevalence": 0.0034,
+      "auc": 0.9234810119110859,
+      "average_precision": 0.0971490244937616
+    },
+    "intraparenchymal": {
+      "positive_count": 254,
+      "negative_count": 4746,
+      "prevalence": 0.0508,
+      "auc": 0.9602060251318143,
+      "average_precision": 0.7128650508076966
+    },
+    "intraventricular": {
+      "positive_count": 160,
+      "negative_count": 4840,
+      "prevalence": 0.032,
+      "auc": 0.9928770661157025,
+      "average_precision": 0.8586426782117094
+    },
+    "subarachnoid": {
+      "positive_count": 234,
+      "negative_count": 4766,
+      "prevalence": 0.0468,
+      "auc": 0.9242667972210566,
+      "average_precision": 0.5315341010035605
+    },
+    "subdural": {
+      "positive_count": 301,
+      "negative_count": 4699,
+      "prevalence": 0.0602,
+      "auc": 0.8981807820848291,
+      "average_precision": 0.510231939184519
+    }
+  },
+  "best_f1_threshold_any": {
+    "threshold": 0.9,
+    "tn": 4093.0,
+    "fp": 206.0,
+    "fn": 164.0,
+    "tp": 537.0,
+    "predicted_positive": 743.0,
+    "predicted_positive_rate": 0.1486,
+    "precision": 0.7227456258411844,
+    "recall": 0.7660485021398002,
+    "f1": 0.7437673130193906,
+    "false_negative_rate": 0.23395149786019973,
+    "false_positive_rate": 0.04791812049313794
+  },
+  "best_threshold_with_recall_at_least_90": {
+    "threshold": 0.6,
+    "tn": 3470.0,
+    "fp": 829.0,
+    "fn": 67.0,
+    "tp": 634.0,
+    "predicted_positive": 1463.0,
+    "predicted_positive_rate": 0.2926,
+    "precision": 0.4333561175666439,
+    "recall": 0.9044222539229672,
+    "f1": 0.5859519408502772,
+    "false_negative_rate": 0.09557774607703282,
+    "false_positive_rate": 0.19283554314956966
+  },
+  "best_threshold_with_recall_at_least_95": {
+    "threshold": 0.4,
+    "tn": 3049.0,
+    "fp": 1250.0,
+    "fn": 31.0,
+    "tp": 670.0,
+    "predicted_positive": 1920.0,
+    "predicted_positive_rate": 0.384,
+    "precision": 0.3489583333333333,
+    "recall": 0.9557774607703281,
+    "f1": 0.5112552460892789,
+    "false_negative_rate": 0.0442225392296719,
+    "false_positive_rate": 0.2907652942544778
+  },
+  "outputs": {
+    "predictions_csv": "outputs\\logs\\holdout_5000_predictions_convnext_tiny_brain_only_10000.csv",
+    "threshold_csv": "outputs\\logs\\holdout_5000_threshold_sweep_any_convnext_tiny_brain_only_10000.csv",
+    "triage_csv": "outputs\\logs\\holdout_5000_triage_simulation_convnext_tiny_brain_only_10000.csv"
+  }
+}
