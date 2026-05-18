@@ -1,106 +1,172 @@
-# Explainable ConvNeXt-Based Intracranial Hemorrhage Triage on Head CT  
-## Natural-Prevalence Evaluation, Statistical Backbone Comparison, CT Window Ablation, Calibration, and Explainability
+# Explainable ConvNeXt-Based Intracranial Hemorrhage Triage on Head CT
+# Natural-Prevalence Evaluation, Paired Statistical Backbone Comparison, CT Window Ablation, Calibration, and Explainability
 
-> **Q1-oriented research repository for AI-assisted intracranial hemorrhage (ICH) triage from non-contrast head CT images.**  
-> This repository documents a complete experimental workflow: RSNA DICOM preprocessing, Hounsfield Unit conversion, CT windowing, CNN backbone comparison, ConvNeXt-Tiny best-model evaluation, statistical bootstrap testing, CT window ablation, calibration analysis, triage simulation, Grad-CAM qualitative interpretation, manuscript draft generation, and GitHub-safe public release without medical images or checkpoints.
+> **Q1-oriented research repository and paper companion for AI-assisted intracranial hemorrhage triage from non-contrast head CT images.**  
+> Repository: <https://github.com/rizalfanex/ai-ct-hemorrhage-triage>
 
 ---
 
 ## Table of Contents
 
-1. [Executive Summary](#executive-summary)  
-2. [Most Suitable Q1-Style Paper Title](#most-suitable-q1-style-paper-title)  
-3. [Research Problem](#research-problem)  
-4. [Why This Research Matters](#why-this-research-matters)  
-5. [Project Status](#project-status)  
-6. [What Has Been Completed](#what-has-been-completed)  
-7. [Relevant Literature and Positioning](#relevant-literature-and-positioning)  
-8. [Dataset and Experimental Splits](#dataset-and-experimental-splits)  
-9. [Methodological Pipeline](#methodological-pipeline)  
-10. [Mathematical Formulation](#mathematical-formulation)  
-11. [Model Backbones](#model-backbones)  
-12. [Training Configuration](#training-configuration)  
-13. [Evaluation Protocol](#evaluation-protocol)  
-14. [Primary Quantitative Results](#primary-quantitative-results)  
-15. [Best Model: ConvNeXt-Tiny](#best-model-convnext-tiny)  
-16. [Per-Label Performance](#per-label-performance)  
-17. [Backbone Comparison](#backbone-comparison)  
-18. [Paired Bootstrap Statistical Comparison](#paired-bootstrap-statistical-comparison)  
-19. [CT Window Ablation Study](#ct-window-ablation-study)  
-20. [Triage Simulation](#triage-simulation)  
-21. [Calibration Analysis](#calibration-analysis)  
-22. [Error Analysis](#error-analysis)  
-23. [Qualitative Explainability](#qualitative-explainability)  
-24. [Generated Figures](#generated-figures)  
-25. [Generated Reports](#generated-reports)  
-26. [Repository Structure](#repository-structure)  
-27. [Reproducibility Workflow](#reproducibility-workflow)  
-28. [GitHub Data Governance](#github-data-governance)  
-29. [Q1-Readiness Assessment](#q1-readiness-assessment)  
-30. [Remaining Gaps Before Serious Q1 Submission](#remaining-gaps-before-serious-q1-submission)  
-31. [Limitations](#limitations)  
-32. [Future Work](#future-work)  
-33. [Medical and Ethical Disclaimer](#medical-and-ethical-disclaimer)  
-34. [Suggested Citation](#suggested-citation)  
-35. [References](#references)
+- [1. Executive Summary](#1-executive-summary)
+  - [1.1 Final Research Position](#11-final-research-position)
+  - [1.2 Main Result](#12-main-result)
+  - [1.3 Why This Repository Looks Q1-Oriented](#13-why-this-repository-looks-q1-oriented)
+- [2. Recommended Q1 Paper Title](#2-recommended-q1-paper-title)
+  - [2.1 Primary Title](#21-primary-title)
+  - [2.2 Alternative Titles](#22-alternative-titles)
+- [3. Research Motivation](#3-research-motivation)
+  - [3.1 Clinical Problem](#31-clinical-problem)
+  - [3.2 AI Triage Opportunity](#32-ai-triage-opportunity)
+  - [3.3 Research Question](#33-research-question)
+- [4. Completed Work Summary](#4-completed-work-summary)
+  - [4.1 Engineering Work Completed](#41-engineering-work-completed)
+  - [4.2 Experimental Work Completed](#42-experimental-work-completed)
+  - [4.3 Paper-Readiness Work Completed](#43-paper-readiness-work-completed)
+- [5. Literature Positioning](#5-literature-positioning)
+  - [5.1 RSNA ICH Challenge Context](#51-rsna-ich-challenge-context)
+  - [5.2 Relevant ICH Detection Papers](#52-relevant-ich-detection-papers)
+  - [5.3 Backbone Literature](#53-backbone-literature)
+  - [5.4 Explainability Literature](#54-explainability-literature)
+- [6. Dataset and Experimental Splits](#6-dataset-and-experimental-splits)
+  - [6.1 Dataset Source](#61-dataset-source)
+  - [6.2 Label Schema](#62-label-schema)
+  - [6.3 Training and Holdout Splits](#63-training-and-holdout-splits)
+- [7. Methodology](#7-methodology)
+  - [7.1 Pipeline Overview](#71-pipeline-overview)
+  - [7.2 DICOM to Hounsfield Unit Conversion](#72-dicom-to-hounsfield-unit-conversion)
+  - [7.3 CT Windowing](#73-ct-windowing)
+  - [7.4 Multi-Label Prediction](#74-multi-label-prediction)
+  - [7.5 Loss Function](#75-loss-function)
+  - [7.6 Triage Thresholding](#76-triage-thresholding)
+- [8. Model Backbones](#8-model-backbones)
+  - [8.1 EfficientNet-B0](#81-efficientnet-b0)
+  - [8.2 DenseNet121](#82-densenet121)
+  - [8.3 ConvNeXt-Tiny](#83-convnext-tiny)
+- [9. Training Protocol](#9-training-protocol)
+  - [9.1 Shared Training Setup](#91-shared-training-setup)
+  - [9.2 Hardware](#92-hardware)
+- [10. Evaluation Protocol](#10-evaluation-protocol)
+  - [10.1 Primary Metrics](#101-primary-metrics)
+  - [10.2 Secondary Metrics](#102-secondary-metrics)
+  - [10.3 Statistical Testing](#103-statistical-testing)
+- [11. Quantitative Results](#11-quantitative-results)
+  - [11.1 Backbone Comparison](#111-backbone-comparison)
+  - [11.2 Best Model: ConvNeXt-Tiny](#112-best-model-convnext-tiny)
+  - [11.3 Per-Label Results](#113-per-label-results)
+- [12. Paired Statistical Backbone Comparison](#12-paired-statistical-backbone-comparison)
+- [13. CT Window Ablation Study](#13-ct-window-ablation-study)
+- [14. Triage Simulation](#14-triage-simulation)
+- [15. Calibration Analysis](#15-calibration-analysis)
+- [16. Error Analysis](#16-error-analysis)
+- [17. Qualitative Explainability](#17-qualitative-explainability)
+- [18. Embedded Figures for Q1-Style Review](#18-embedded-figures-for-q1-style-review)
+  - [18.1 Backbone Comparison Figures](#181-backbone-comparison-figures)
+  - [18.2 ConvNeXt-Tiny Main Paper Figures](#182-convnext-tiny-main-paper-figures)
+  - [18.3 Bootstrap and Statistical Figures](#183-bootstrap-and-statistical-figures)
+  - [18.4 Ablation Study Figure](#184-ablation-study-figure)
+  - [18.5 Error Analysis Figures](#185-error-analysis-figures)
+  - [18.6 Supplementary EfficientNet-B0 Baseline Figures](#186-supplementary-efficientnet-b0-baseline-figures)
+  - [18.7 Experiment Summary Figures](#187-experiment-summary-figures)
+- [19. Generated Reports](#19-generated-reports)
+- [20. Repository Structure](#20-repository-structure)
+- [21. Reproducibility Workflow](#21-reproducibility-workflow)
+- [22. GitHub Data Governance](#22-github-data-governance)
+- [23. Q1-Readiness Assessment](#23-q1-readiness-assessment)
+- [24. Remaining Gaps Before Strong Q1 Submission](#24-remaining-gaps-before-strong-q1-submission)
+- [25. Limitations](#25-limitations)
+- [26. Future Work](#26-future-work)
+- [27. Medical and Ethical Disclaimer](#27-medical-and-ethical-disclaimer)
+- [28. Suggested Citation](#28-suggested-citation)
+- [29. References](#29-references)
 
 ---
 
-## Executive Summary
+## 1. Executive Summary
 
-This repository presents a **research-grade AI pipeline** for slice-level intracranial hemorrhage triage on head CT images.
+### 1.1 Final Research Position
 
-The current best model is **ConvNeXt-Tiny**, evaluated on a **5,000-image natural-prevalence holdout set**. The model achieved:
+This repository presents a **research-grade deep learning framework** for slice-level intracranial hemorrhage triage on non-contrast head CT images.
 
-| Metric | Value |
+The project is designed to support a Q1-style manuscript because it does not stop at basic training accuracy. It includes:
+
+1. DICOM preprocessing;
+2. Hounsfield Unit conversion;
+3. CT windowing;
+4. multi-label hemorrhage prediction;
+5. natural-prevalence holdout evaluation;
+6. three-backbone comparison;
+7. bootstrap confidence intervals;
+8. paired bootstrap statistical testing;
+9. CT window ablation;
+10. calibration analysis;
+11. triage threshold analysis;
+12. error analysis;
+13. explainability-oriented Grad-CAM generation;
+14. manuscript draft and figure plan;
+15. GitHub-safe public release without raw medical data.
+
+### 1.2 Main Result
+
+The best-performing backbone is **ConvNeXt-Tiny**.
+
+| Metric | ConvNeXt-Tiny Result |
 |---|---:|
-| Any-hemorrhage AUC | **0.945789** |
+| Natural holdout size | 5,000 CT images |
+| Any-hemorrhage positive cases | 701 |
+| Any-hemorrhage prevalence | 14.02% |
+| Any AUC | **0.945789** |
 | AUC 95% bootstrap CI | **0.936999 – 0.953849** |
-| Any-hemorrhage Average Precision | **0.816036** |
+| Any Average Precision | **0.816036** |
 | AP 95% bootstrap CI | **0.792165 – 0.839746** |
 | Brier score | **0.063986** |
 | High-sensitivity threshold | **0.10** |
 | Recall at threshold 0.10 | **0.931526** |
 | Precision at threshold 0.10 | **0.402589** |
-| Prioritized workload at threshold 0.10 | **32.44%** |
-| False negative rate at threshold 0.10 | **6.85%** |
+| Prioritized workload | **32.44%** |
+| False negative rate | **6.85%** |
 
-The project includes:
+### 1.3 Why This Repository Looks Q1-Oriented
 
-- DICOM-to-Hounsfield Unit preprocessing;
-- CT windowing;
-- multi-label classification;
-- EfficientNet-B0, DenseNet121, and ConvNeXt-Tiny comparison;
-- paired bootstrap statistical testing;
-- bootstrap confidence intervals;
-- calibration analysis;
-- CT window ablation;
-- error analysis;
-- Grad-CAM qualitative interpretation;
-- manuscript draft and submission checklist;
-- public GitHub release with data governance safeguards.
+A Q1-oriented medical AI paper is expected to include more than model accuracy. This project includes:
+
+| Q1 Expectation | Status |
+|---|---|
+| Natural-prevalence evaluation | Completed |
+| Multiple backbone comparison | Completed |
+| Confidence intervals | Completed |
+| Statistical comparison | Completed |
+| Ablation study | Completed |
+| Calibration analysis | Completed |
+| Error analysis | Completed |
+| Explainability component | Generated locally |
+| Reproducible code | Completed |
+| Data governance | Completed |
+| Manuscript draft | Completed |
+| External validation | Not yet completed |
+| Patient-level aggregation | Not yet completed |
 
 ---
 
-## Most Suitable Q1-Style Paper Title
+## 2. Recommended Q1 Paper Title
 
-Recommended title:
+### 2.1 Primary Title
 
 > **Explainable ConvNeXt-Based Triage of Intracranial Hemorrhage on Head CT: Natural-Prevalence Evaluation, Paired Statistical Backbone Comparison, and CT Window Ablation**
 
-Why this title is strong:
+This is the recommended title because it communicates:
 
-| Title Element | Reason |
+| Title Component | Reason |
 |---|---|
-| Explainable | Signals interpretability / Grad-CAM component |
-| ConvNeXt-Based | Highlights the best-performing modern CNN backbone |
-| Intracranial Hemorrhage | Defines the clinical target |
-| Head CT | Defines modality |
-| Natural-Prevalence Evaluation | Signals realistic evaluation beyond balanced validation |
-| Paired Statistical Backbone Comparison | Signals methodological rigor |
-| CT Window Ablation | Signals experimental depth and honest ablation |
+| Explainable | Signals Grad-CAM / interpretability |
+| ConvNeXt-Based | Highlights the best-performing modern CNN |
+| Intracranial Hemorrhage | Clear clinical target |
+| Head CT | Clear imaging modality |
+| Natural-Prevalence Evaluation | Signals realistic evaluation |
+| Paired Statistical Backbone Comparison | Signals statistical rigor |
+| CT Window Ablation | Signals experimental depth |
 
-Alternative titles:
+### 2.2 Alternative Titles
 
 1. **Natural-Prevalence Evaluation of ConvNeXt-Based Intracranial Hemorrhage Triage on Head CT**
 2. **A Reproducible Deep Learning Framework for Intracranial Hemorrhage Triage with Bootstrap Evaluation and CT Window Ablation**
@@ -109,238 +175,158 @@ Alternative titles:
 
 ---
 
-## Research Problem
+## 3. Research Motivation
 
-Intracranial hemorrhage is a potentially life-threatening condition that requires rapid radiological assessment. In high-volume emergency or radiology settings, a triage model may help prioritize CT images with high hemorrhage probability.
+### 3.1 Clinical Problem
 
-The research question:
+Intracranial hemorrhage is a potentially life-threatening radiological finding. In high-volume emergency and radiology workflows, head CT studies may queue before expert review. A triage model can support radiologists by ranking likely hemorrhage-positive images earlier.
 
-> Can a modern convolutional neural network prioritize hemorrhage-positive head CT images under natural-prevalence holdout conditions while maintaining high recall and manageable workload?
+### 3.2 AI Triage Opportunity
+
+This project focuses on **triage**, not autonomous diagnosis.
+
+The intended use is:
+
+```text
+Model prediction → priority score → radiology queue assistance → radiologist final interpretation
+```
+
+The model should therefore prioritize:
+
+1. high recall;
+2. low false negative rate;
+3. manageable workload;
+4. interpretable output;
+5. robust evaluation under realistic prevalence.
+
+### 3.3 Research Question
+
+> Can a modern CNN backbone prioritize hemorrhage-positive head CT images under natural-prevalence holdout conditions while maintaining high recall and manageable workload?
 
 Sub-questions:
 
-1. Which CNN backbone performs best under identical training/evaluation protocol?
-2. Does ConvNeXt-Tiny significantly outperform EfficientNet-B0 and DenseNet121?
-3. Does multi-window CT input outperform brain-window-only input?
-4. What threshold gives high-sensitivity triage?
+1. Which backbone performs best: EfficientNet-B0, DenseNet121, or ConvNeXt-Tiny?
+2. Is ConvNeXt-Tiny statistically better under paired bootstrap comparison?
+3. Does multi-window CT input improve over brain-window-only input?
+4. What triage threshold provides high sensitivity?
 5. What workload is required to capture most hemorrhage-positive cases?
-6. How calibrated are the model probabilities?
+6. How calibrated are the predicted probabilities?
 7. What failure modes remain?
 
 ---
 
-## Why This Research Matters
+## 4. Completed Work Summary
 
-A triage model is not designed to replace radiologists. It is designed to assist workflow prioritization.
+### 4.1 Engineering Work Completed
 
-A clinically meaningful triage model should:
-
-- prioritize high-risk images earlier;
-- maintain high sensitivity;
-- reduce false negatives;
-- avoid excessive false-positive workload;
-- report uncertainty and confidence intervals;
-- be interpretable enough for expert review;
-- be evaluated under realistic prevalence.
-
-This repository focuses on **triage-oriented evaluation**, not just classification accuracy.
-
----
-
-## Project Status
-
-| Area | Status |
+| Work Item | Status |
 |---|---|
-| Dataset download | Completed locally |
+| Project folder setup | Completed |
+| Conda environment used | Completed |
+| CUDA/GPU verification | Completed |
+| Dependency/import check | Completed |
+| Kaggle authentication | Completed |
+| RSNA dataset download | Completed |
+| DICOM extraction | Completed |
 | Label preprocessing | Completed |
-| DICOM preprocessing | Completed |
-| CT windowing | Completed |
-| EfficientNet-B0 baseline | Completed |
-| DenseNet121 baseline | Completed |
-| ConvNeXt-Tiny baseline | Completed |
+| CT windowing utilities | Completed |
+| Dataset loader | Completed |
+| Model builder | Completed |
+| Training scripts | Completed |
+| Evaluation scripts | Completed |
+| GitHub repository | Completed |
+| `.gitignore` medical-data protection | Completed |
+
+### 4.2 Experimental Work Completed
+
+| Experiment | Status |
+|---|---|
+| Synthetic CT windowing test | Completed |
+| Real DICOM window visualization | Completed locally |
+| Smoke training | Completed |
+| EfficientNet-B0 2k training | Completed |
+| EfficientNet-B0 10k training | Completed |
+| DenseNet121 10k training | Completed |
+| ConvNeXt-Tiny 10k training | Completed |
+| ConvNeXt-Tiny brain-only ablation | Completed |
 | Natural holdout evaluation | Completed |
-| ROC / PR / calibration figures | Completed |
+| ROC / PR / calibration generation | Completed |
 | Bootstrap confidence intervals | Completed |
-| Paired bootstrap backbone comparison | Completed |
-| Brain-window-only ablation | Completed |
-| Paired bootstrap ablation test | Completed |
-| Grad-CAM qualitative outputs | Generated locally |
-| GitHub-safe public release | Completed |
+| Paired backbone comparison | Completed |
+| Paired ablation comparison | Completed |
+| Error analysis | Completed |
+| Grad-CAM generation | Completed locally |
+
+### 4.3 Paper-Readiness Work Completed
+
+| Paper Component | Status |
+|---|---|
+| README / project report | Completed |
 | Manuscript draft | Completed |
-| Q1 submission | Not yet final; still requires external validation and manuscript polishing |
+| Figure plan | Completed |
+| Q1 checklist | Completed |
+| Statistical summary | Completed |
+| Public-safe GitHub figures | Completed |
+| Public-safe GitHub reports | Completed |
 
 ---
 
-## What Has Been Completed
+## 5. Literature Positioning
 
-This section records the actual project work already completed.
+### 5.1 RSNA ICH Challenge Context
 
-### 1. Environment and Dependency Setup
+The RSNA Intracranial Hemorrhage Detection Challenge was created to support AI research for detecting acute intracranial hemorrhage and hemorrhage subtypes from head CT images. RSNA describes the challenge as using more than 25,000 annotated cranial CT exams, created with ASNR, MD.ai, and Kaggle.
 
-Completed:
+This project uses the RSNA challenge data but evaluates a compact, reproducible experimental pipeline under a natural-prevalence holdout design.
 
-- Conda environment: `main`
-- Core libraries verified:
-  - PyTorch
-  - CUDA
-  - NumPy
-  - Pandas
-  - scikit-learn
-  - pydicom
-  - OpenCV
-  - Albumentations
-  - timm
-  - torchmetrics
-  - MONAI
-- GPU test passed on NVIDIA GeForce RTX 5060.
+### 5.2 Relevant ICH Detection Papers
 
-### 2. RSNA Dataset Access
-
-Completed:
-
-- Kaggle authentication configured.
-- RSNA Intracranial Hemorrhage Detection dataset downloaded locally.
-- Full dataset zip stored locally, not uploaded to GitHub.
-- Raw medical data excluded via `.gitignore`.
-
-### 3. Data Governance
-
-Completed:
-
-- `data/` ignored.
-- `.dcm`, `.dicom`, `.zip`, `.pt`, `.pth`, `.ckpt`, `.onnx` ignored.
-- Prediction CSV files with image-level identifiers ignored.
-- Grad-CAM patient-derived visualizations ignored.
-- GitHub public repository contains only code, aggregate metrics, aggregate reports, non-patient-derived figures, and manuscript files.
-
-### 4. DICOM and CT Windowing
-
-Completed:
-
-- DICOM loading.
-- Pixel-to-Hounsfield Unit conversion.
-- Multi-window CT preprocessing:
-  - brain window;
-  - subdural window;
-  - bone window.
-- Synthetic CT preprocessing test passed.
-- Real DICOM visualization generated locally but excluded from GitHub.
-
-### 5. Dataset Construction
-
-Completed:
-
-- RSNA label pivot from long to wide multi-label format.
-- Balanced training subset of 10,000 images:
-  - 5,000 normal;
-  - 5,000 hemorrhage-positive.
-- Natural-prevalence holdout of 5,000 images:
-  - 4,299 normal;
-  - 701 any-hemorrhage positive.
-
-### 6. Baseline and Backbone Training
-
-Completed:
-
-| Model | Training Size | Status |
-|---|---:|---|
-| EfficientNet-B0 | 2,000 | Completed |
-| EfficientNet-B0 | 10,000 | Completed |
-| DenseNet121 | 10,000 | Completed |
-| ConvNeXt-Tiny | 10,000 | Completed |
-| ConvNeXt-Tiny brain-only | 10,000 | Completed |
-
-### 7. Natural Holdout Evaluation
-
-Completed for:
-
-- EfficientNet-B0;
-- DenseNet121;
-- ConvNeXt-Tiny;
-- ConvNeXt-Tiny brain-only.
-
-### 8. Paper Metrics
-
-Completed:
-
-- ROC curve;
-- PR curve;
-- calibration curve;
-- confusion matrix;
-- per-label AUC/AP;
-- Brier score;
-- threshold sweep;
-- triage simulation.
-
-### 9. Statistical Testing
-
-Completed:
-
-- bootstrap confidence intervals for ConvNeXt-Tiny;
-- paired bootstrap backbone comparison;
-- paired bootstrap multi-window vs brain-only ablation.
-
-### 10. Manuscript Preparation
-
-Completed:
-
-- manuscript draft;
-- manuscript draft v2;
-- figure plan;
-- Q1 submission gap checklist;
-- statistical and ablation summary.
-
----
-
-## Relevant Literature and Positioning
-
-This project is positioned within four literature categories:
-
-1. public ICH CT datasets and challenge benchmarks;
-2. deep learning for ICH detection;
-3. CNN backbone architecture research;
-4. explainability and clinical triage research.
-
-### Literature Summary Table
-
-| Topic | Reference | Relevance to This Project |
+| Study | Key Point | Relation to This Project |
 |---|---|---|
-| RSNA ICH dataset | RSNA Intracranial Hemorrhage Detection Challenge | Provides the main dataset and subtype labels |
-| ICH challenge winner | Wang et al., 2021 | Strong reference for high-performing RSNA-based ICH detection |
-| ICH DL review | Cortés-Ferre et al., 2023 | Supports broader DL relevance for ICH classification |
-| ICH DL meta-analysis | Karamian et al., 2025 | Supports diagnostic promise of DL for NCCT ICH detection |
-| Brain CT triage simulation | Lee et al., 2022 | Relevant to workflow and emergency triage framing |
-| Clinical simulation of DL ICH detection | Choi et al., 2024 | Relevant to clinical decision-making simulation |
-| EfficientNet | Tan and Le, 2019 | Lightweight scaling-efficient CNN baseline |
-| DenseNet | Huang et al., 2017 | Dense feature-reuse CNN comparator |
-| ConvNeXt | Liu et al., 2022 | Modern CNN backbone selected as primary model |
-| Grad-CAM | Selvaraju et al., 2017 | Explainability method used for qualitative analysis |
+| Flanders et al., 2020 | Describes construction of RSNA 2019 Brain CT Hemorrhage Challenge dataset | Dataset context |
+| Wang et al., 2021 | RSNA first-place solution; reported AUCs around 0.99 for ICH subtype classification and external validation | Strong literature benchmark; not directly comparable because this project uses a smaller 10k training subset |
+| Chilamkurthy et al., 2018 | Critical findings detection on head CT, including ICH | Supports clinical relevance of AI triage |
+| Arbabshirani et al., 2018 | 3D deep learning for ICH detection and workflow prioritization | Supports triage workflow motivation |
+| Nguyen et al., 2020 | CNN-LSTM approach with multi-window CT input | Related to windowing and slice-sequence modeling |
+| Chen et al., 2024 | Efficient model for ICH classification, validated on RSNA and external datasets | Relevant external-validation direction |
 
-### Comparative Literature Context
+Important comparison note:
 
-Important caution:
+> This repository should not claim state-of-the-art against full RSNA challenge winners because the training scale, split design, objective, and external validation protocol are different.
 
-> The results in this repository are not directly comparable to all published papers because datasets, splits, training scale, patient-level aggregation, preprocessing, evaluation units, and external validation protocols may differ.
+### 5.3 Backbone Literature
 
-However, relevant positioning is still useful.
+| Backbone | Literature Basis | Why Used Here |
+|---|---|---|
+| EfficientNet-B0 | EfficientNet compound scaling | Lightweight baseline |
+| DenseNet121 | Dense feature reuse | Common strong medical imaging comparator |
+| ConvNeXt-Tiny | Modernized pure ConvNet design | Best-performing backbone in this project |
 
-| Study / Source | Dataset / Evaluation | Reported Focus | Relation to This Project |
-|---|---|---|---|
-| RSNA Challenge | >25,000 cranial CT exams shared for acute ICH and subtype detection | Public challenge benchmark | This project uses the RSNA challenge data |
-| Wang et al., 2021 | 2019 RSNA Brain CT Hemorrhage Challenge dataset | Automatic detection and classification of acute ICH and five subtypes | Shows high-performing challenge-level ICH detection is feasible |
-| Lee et al., 2022 | Brain CT triage system evaluated in ED workflow simulation and external screening cohorts | Emergency triage workflow | Supports triage framing beyond pure classification |
-| Choi et al., 2024 | DL-based ICH detection algorithm in simulated clinical environment | Clinical decision support simulation | Supports workflow-impact motivation |
-| This project | 5,000-image natural-prevalence holdout | Slice-level triage, backbone comparison, bootstrap CI, ablation | Focuses on reproducible experimental rigor and Q1-style reporting |
+### 5.4 Explainability Literature
+
+Grad-CAM is used as the qualitative interpretability technique. It generates class-discriminative localization maps from gradients flowing into convolutional feature maps. In this project, Grad-CAM outputs were generated locally but not uploaded publicly because they are derived from medical images.
 
 ---
 
-## Dataset and Experimental Splits
+## 6. Dataset and Experimental Splits
 
-The RSNA Intracranial Hemorrhage Detection challenge dataset was used.
+### 6.1 Dataset Source
 
-### Label Columns
+Dataset:
 
-| Label | Description |
+```text
+RSNA Intracranial Hemorrhage Detection
+```
+
+Task:
+
+```text
+Multi-label hemorrhage classification from head CT images
+```
+
+### 6.2 Label Schema
+
+| Label | Meaning |
 |---|---|
 | `any` | Any intracranial hemorrhage |
 | `epidural` | Epidural hemorrhage |
@@ -349,337 +335,274 @@ The RSNA Intracranial Hemorrhage Detection challenge dataset was used.
 | `subarachnoid` | Subarachnoid hemorrhage |
 | `subdural` | Subdural hemorrhage |
 
-### Processed Label Summary
+### 6.3 Training and Holdout Splits
 
-| Item | Count |
-|---|---:|
-| Unique processed images | 752,803 |
-| Any hemorrhage positive | 107,933 |
-| Approximate natural any prevalence | 14.34% |
-
-### Experimental Splits
-
-| Split | Size | Distribution | Purpose |
-|---|---:|---|---|
-| Smoke test | Small sample | Sanity check | Pipeline validation |
-| Training subset 2k | 2,000 | 1,000 normal / 1,000 positive | Initial baseline |
-| Training subset 10k | 10,000 | 5,000 normal / 5,000 positive | Main training |
-| Natural holdout | 5,000 | 4,299 normal / 701 positive | Main evaluation |
+| Split | Size | Distribution |
+|---|---:|---|
+| Full processed label table | 752,803 unique images | RSNA processed labels |
+| Any-positive images | 107,933 | Any hemorrhage positive |
+| Balanced train subset | 10,000 | 5,000 normal / 5,000 positive |
+| Natural holdout | 5,000 | 4,299 normal / 701 positive |
+| Holdout prevalence | 14.02% | Natural-prevalence evaluation |
 
 ---
 
-## Methodological Pipeline
+## 7. Methodology
+
+### 7.1 Pipeline Overview
 
 ```text
-RSNA DICOM Image
+DICOM CT image
     ↓
-Read DICOM metadata and pixel array
+Pixel array extraction
     ↓
-Convert raw pixels to Hounsfield Units
+Hounsfield Unit conversion
     ↓
-Apply CT windows
+CT windowing
     ↓
-Construct 3-channel tensor
-    ↓
-Resize to 224 × 224
+3-channel tensor
     ↓
 CNN backbone
     ↓
-Six-label sigmoid output
+Six-label sigmoid outputs
     ↓
-Any-hemorrhage triage probability
+Thresholding
     ↓
-Threshold selection and workload simulation
+Triage ranking
+    ↓
+Statistical evaluation
 ```
 
-### Multi-Window Input
+### 7.2 DICOM to Hounsfield Unit Conversion
 
-```text
-Channel 1: brain window
-Channel 2: subdural window
-Channel 3: bone window
-```
-
-### Brain-Only Ablation
-
-```text
-Channel 1: brain window
-Channel 2: brain window
-Channel 3: brain window
-```
-
----
-
-## Mathematical Formulation
-
-### 1. Hounsfield Unit Conversion
-
-For raw DICOM pixel \(x\):
+Raw DICOM pixels are converted to Hounsfield Units:
 
 ```math
-HU(x) = s x + b
+HU(x) = x \cdot s + b
 ```
 
 where:
 
-- \(s\) is `RescaleSlope`;
-- \(b\) is `RescaleIntercept`.
+- \(x\) = raw pixel value;
+- \(s\) = `RescaleSlope`;
+- \(b\) = `RescaleIntercept`.
 
-### 2. CT Windowing
+### 7.3 CT Windowing
 
 For window center \(c\) and width \(w\):
 
 ```math
-L = c - rac{w}{2}
+I_w =
+\frac{
+\text{clip}(HU, c - \frac{w}{2}, c + \frac{w}{2}) - (c - \frac{w}{2})
+}{w}
 ```
+
+Multi-window input:
 
 ```math
-U = c + rac{w}{2}
+X = [I_{brain}, I_{subdural}, I_{bone}]
 ```
+
+| Channel | Window | Center | Width |
+|---|---|---:|---:|
+| 1 | Brain | 40 | 80 |
+| 2 | Subdural | 80 | 200 |
+| 3 | Bone | 600 | 2800 |
+
+Brain-only ablation:
 
 ```math
-I_{c,w}(x) =
-rac{\min(\max(HU(x), L), U) - L}{U-L}
+X_{brain-only} = [I_{brain}, I_{brain}, I_{brain}]
 ```
 
-### 3. Multi-Window Tensor
+### 7.4 Multi-Label Prediction
+
+The model outputs six logits:
 
 ```math
-X =
-[I_{40,80}, I_{80,200}, I_{600,2800}]
+z = f_{\theta}(X) \in \mathbb{R}^{6}
 ```
 
-where:
-
-- \(I_{40,80}\) is the brain window;
-- \(I_{80,200}\) is the subdural window;
-- \(I_{600,2800}\) is the bone window.
-
-### 4. Model Prediction
-
-A CNN model \(f_{	heta}\) maps the input tensor \(X\) to six logits:
+Sigmoid probability:
 
 ```math
-z = f_{	heta}(X), \quad z \in \mathbb{R}^{6}
+\hat{y}_k = \sigma(z_k) = \frac{1}{1 + e^{-z_k}}
 ```
 
-The probability for label \(k\) is:
-
-```math
-\hat{p}_k = \sigma(z_k) = rac{1}{1 + e^{-z_k}}
-```
-
-### 5. Multi-Label Loss
+### 7.5 Loss Function
 
 Weighted binary cross-entropy:
 
 ```math
-\mathcal{L}
-=
--rac{1}{K}
+\mathcal{L} =
+-\frac{1}{K}
 \sum_{k=1}^{K}
 \left[
-w_k y_k \log(\hat{p}_k)
+w_k y_k \log(\hat{y}_k)
 +
-(1-y_k)\log(1-\hat{p}_k)
-
-ight]
+(1-y_k)\log(1-\hat{y}_k)
+\right]
 ```
 
-where:
+where \(K=6\).
 
-- \(K=6\);
-- \(w_k\) is the positive class weight;
-- \(y_k\in\{0,1\}\);
-- \(\hat{p}_k\in[0,1]\).
-
-### 6. Triage Decision Rule
-
-For any-hemorrhage triage:
+### 7.6 Triage Thresholding
 
 ```math
-\hat{y}_{any} =
-egin{cases}
-1, & \hat{p}_{any} \geq 	au \
-0, & \hat{p}_{any} < 	au
+\hat{y}_{any}^{binary} =
+\begin{cases}
+1, & \hat{p}_{any} \geq \tau \\
+0, & \hat{p}_{any} < \tau
 \end{cases}
 ```
 
-For ConvNeXt-Tiny high-sensitivity triage:
+For the best model:
 
-```math
-    au = 0.10
-```
-
-### 7. Triage Metrics
-
-Recall:
-
-```math
-Recall = rac{TP}{TP + FN}
-```
-
-Precision:
-
-```math
-Precision = rac{TP}{TP + FP}
-```
-
-False negative rate:
-
-```math
-FNR = rac{FN}{TP + FN}
-```
-
-False positive rate:
-
-```math
-FPR = rac{FP}{FP + TN}
-```
-
-Prioritized workload:
-
-```math
-W = rac{TP + FP}{N}
-```
-
-### 8. Brier Score
-
-```math
-Brier = rac{1}{N}\sum_{i=1}^{N}(\hat{p}_i - y_i)^2
-```
-
-### 9. Paired Bootstrap Difference
-
-For models \(A\) and \(B\):
-
-```math
-\Delta_M = M_A - M_B
-```
-
-For bootstrap sample \(b\):
-
-```math
-\Delta_M^{(b)} = M_A^{(b)} - M_B^{(b)}
-```
-
-95% percentile interval:
-
-```math
-CI_{95\%}
-=
-[
-Q_{2.5\%}(\Delta_M^{(b)}),
-Q_{97.5\%}(\Delta_M^{(b)})
-]
+```text
+High-sensitivity threshold: τ = 0.10
 ```
 
 ---
 
-## Model Backbones
+## 8. Model Backbones
 
-### EfficientNet-B0
+### 8.1 EfficientNet-B0
 
-Used as a lightweight CNN baseline. EfficientNet is based on compound scaling of depth, width, and resolution.
+Role:
 
-### DenseNet121
+```text
+Lightweight baseline
+```
 
-Used as a strong classic medical imaging comparator. DenseNet uses dense connectivity to improve feature propagation and encourage feature reuse.
+Holdout result:
 
-### ConvNeXt-Tiny
+| Metric | Value |
+|---|---:|
+| Any AUC | 0.916446 |
+| Any AP | 0.709731 |
 
-Used as the modern CNN backbone. ConvNeXt modernizes convolutional networks using design principles inspired by contemporary vision architectures while remaining a pure ConvNet family.
+### 8.2 DenseNet121
+
+Role:
+
+```text
+Strong classic medical imaging comparator
+```
+
+Holdout result:
+
+| Metric | Value |
+|---|---:|
+| Any AUC | 0.936476 |
+| Any AP | 0.781555 |
+
+### 8.3 ConvNeXt-Tiny
+
+Role:
+
+```text
+Best-performing modern CNN backbone
+```
+
+Holdout result:
+
+| Metric | Value |
+|---|---:|
+| Any AUC | 0.945789 |
+| Any AP | 0.816036 |
 
 ---
 
-## Training Configuration
+## 9. Training Protocol
+
+### 9.1 Shared Training Setup
 
 | Parameter | Value |
 |---|---:|
+| Training subset | 10,000 CT images |
+| Training distribution | 5,000 normal / 5,000 hemorrhage-positive |
 | Image size | 224 × 224 |
-| Training subset | 10,000 images |
-| Training distribution | 5,000 normal / 5,000 positive |
-| Validation split | 20% |
 | Batch size | 32 |
 | Epochs | 8 |
 | Optimizer | AdamW |
 | Learning rate | 1e-4 |
 | Weight decay | 1e-4 |
 | Loss | BCEWithLogitsLoss |
-| Class weighting | Positive class weighting |
 | Mixed precision | Enabled |
-| GPU | NVIDIA GeForce RTX 5060 |
+| Primary validation metric | Any AUC |
+
+### 9.2 Hardware
+
+```text
+GPU: NVIDIA GeForce RTX 5060
+CUDA available: True
+```
 
 ---
 
-## Evaluation Protocol
+## 10. Evaluation Protocol
 
-Evaluation used the same 5,000-image natural-prevalence holdout for all models.
+### 10.1 Primary Metrics
 
-| Holdout Statistic | Value |
-|---|---:|
-| Total images | 5,000 |
-| Normal | 4,299 |
-| Any hemorrhage positive | 701 |
-| Any prevalence | 14.02% |
-| Epidural positives | 17 |
-| Intraparenchymal positives | 254 |
-| Intraventricular positives | 160 |
-| Subarachnoid positives | 234 |
-| Subdural positives | 301 |
+1. ROC AUC;
+2. Average Precision.
+
+### 10.2 Secondary Metrics
+
+1. Precision;
+2. Recall;
+3. F1;
+4. False negative rate;
+5. False positive rate;
+6. Prioritized workload rate;
+7. Brier score;
+8. Calibration curve.
+
+### 10.3 Statistical Testing
+
+Bootstrap procedures:
+
+1. model-level bootstrap confidence interval;
+2. paired bootstrap backbone comparison;
+3. paired bootstrap CT-window ablation comparison.
+
+Paired metric difference:
+
+```math
+\Delta = M_A - M_B
+```
+
+Bootstrap 95% confidence interval:
+
+```math
+CI_{95\%} =
+[Q_{2.5\%}(\Delta^{(b)}), Q_{97.5\%}(\Delta^{(b)})]
+```
 
 ---
 
-## Primary Quantitative Results
+## 11. Quantitative Results
 
-### Internal Validation AUC
+### 11.1 Backbone Comparison
 
-| Model | Best Validation Any AUC |
-|---|---:|
-| EfficientNet-B0 | 0.904689 |
-| DenseNet121 | 0.925171 |
-| ConvNeXt-Tiny | 0.930487 |
-| ConvNeXt-Tiny brain-only | 0.933614 |
-
-### Natural Holdout Any-Hemorrhage Performance
-
-| Model | Any AUC | Any AP | Best F1 |
+| Model | Any AUC | Any AP | Recall ≥90% Workload |
 |---|---:|---:|---:|
-| EfficientNet-B0 | 0.916446 | 0.709731 | 0.644090 |
-| DenseNet121 | 0.936476 | 0.781555 | 0.708696 |
-| ConvNeXt-Tiny | **0.945789** | **0.816036** | 0.742898 |
-| ConvNeXt-Tiny brain-only | 0.947194 | 0.815377 | **0.743767** |
+| EfficientNet-B0 | 0.916446 | 0.709731 | 35.48% |
+| DenseNet121 | 0.936476 | 0.781555 | 34.12% |
+| ConvNeXt-Tiny | **0.945789** | **0.816036** | **32.44%** |
 
-Interpretation:
-
-- ConvNeXt-Tiny was the strongest among the three primary multi-window backbones.
-- Brain-only ablation was very competitive and slightly exceeded multi-window AUC, but paired bootstrap showed no meaningful statistical difference.
-
----
-
-## Best Model: ConvNeXt-Tiny
-
-### ConvNeXt-Tiny Holdout Summary
+### 11.2 Best Model: ConvNeXt-Tiny
 
 | Metric | Value |
 |---|---:|
-| AUC | 0.945789 |
-| AUC 95% CI | 0.936999 – 0.953849 |
-| AP | 0.816036 |
-| AP 95% CI | 0.792165 – 0.839746 |
+| Any AUC | 0.945789 |
+| Any AUC 95% CI | 0.936999 – 0.953849 |
+| Any AP | 0.816036 |
+| Any AP 95% CI | 0.792165 – 0.839746 |
 | Brier score | 0.063986 |
-| Best F1 threshold | 0.65 |
-| Best F1 | 0.742898 |
-| High-sensitivity threshold | 0.10 |
-| Recall at 0.10 | 0.931526 |
-| Precision at 0.10 | 0.402589 |
-| Prioritized workload at 0.10 | 32.44% |
 
----
-
-## Per-Label Performance
-
-### ConvNeXt-Tiny Per-Label Results
+### 11.3 Per-Label Results
 
 | Label | Positive Count | Prevalence | AUC | AP |
 |---|---:|---:|---:|---:|
@@ -690,53 +613,25 @@ Interpretation:
 | subarachnoid | 234 | 0.0468 | 0.926740 | 0.498531 |
 | subdural | 301 | 0.0602 | 0.914619 | 0.597648 |
 
-Key interpretation:
-
-- Intraventricular hemorrhage achieved the highest AUC and AP.
-- Epidural AUC was high, but AP was low due to only 17 positive holdout cases.
-- Rare subtype evaluation should be interpreted cautiously.
-
 ---
 
-## Backbone Comparison
+## 12. Paired Statistical Backbone Comparison
 
-### Main Comparison
-
-| Model | Any AUC | Any AP | Recall ≥90% Threshold | Recall | Precision | Workload |
-|---|---:|---:|---:|---:|---:|---:|
-| EfficientNet-B0 | 0.916446 | 0.709731 | 0.25 | 0.908702 | 0.359076 | 35.48% |
-| DenseNet121 | 0.936476 | 0.781555 | 0.35 | 0.910128 | 0.373974 | 34.12% |
-| ConvNeXt-Tiny | **0.945789** | **0.816036** | 0.10 | **0.931526** | **0.402589** | **32.44%** |
-
-ConvNeXt-Tiny achieved:
-
-- highest AUC;
-- highest AP;
-- highest high-sensitivity recall;
-- highest precision at the selected ≥90% recall operating point;
-- lowest workload among the three main backbones.
-
----
-
-## Paired Bootstrap Statistical Comparison
-
-All three backbone models were evaluated on the exact same holdout images. This allows paired bootstrap comparison.
-
-### ConvNeXt-Tiny vs DenseNet121
+### 12.1 ConvNeXt-Tiny vs DenseNet121
 
 | Metric | Difference | 95% CI | Bootstrap p-value |
 |---|---:|---:|---:|
 | AUC | +0.009313 | 0.001840 – 0.016482 | 0.009 |
 | AP | +0.034482 | 0.017094 – 0.051272 | 0.000 |
 
-### ConvNeXt-Tiny vs EfficientNet-B0
+### 12.2 ConvNeXt-Tiny vs EfficientNet-B0
 
 | Metric | Difference | 95% CI | Bootstrap p-value |
 |---|---:|---:|---:|
 | AUC | +0.029343 | 0.019851 – 0.039057 | 0.000 |
 | AP | +0.106306 | 0.081276 – 0.132075 | 0.000 |
 
-### DenseNet121 vs EfficientNet-B0
+### 12.3 DenseNet121 vs EfficientNet-B0
 
 | Metric | Difference | 95% CI | Bootstrap p-value |
 |---|---:|---:|---:|
@@ -745,31 +640,29 @@ All three backbone models were evaluated on the exact same holdout images. This 
 
 Interpretation:
 
-> ConvNeXt-Tiny outperformed both DenseNet121 and EfficientNet-B0 with paired bootstrap confidence intervals that did not cross zero.
+> ConvNeXt-Tiny produced a statistically stable improvement over DenseNet121 and EfficientNet-B0 under paired bootstrap evaluation.
 
 ---
 
-## CT Window Ablation Study
+## 13. CT Window Ablation Study
 
-### Goal
+### 13.1 Ablation Design
 
-The ablation tested whether the 3-channel multi-window input improves any-hemorrhage triage compared with using only the brain window.
+Two ConvNeXt-Tiny variants were compared:
 
-### Ablation Configurations
+| Variant | Input |
+|---|---|
+| Multi-window | Brain + subdural + bone |
+| Brain-only | Brain channel repeated three times |
 
-| Configuration | Channel 1 | Channel 2 | Channel 3 |
-|---|---|---|---|
-| Multi-window | Brain | Subdural | Bone |
-| Brain-only | Brain | Brain | Brain |
+### 13.2 Ablation Result
 
-### Ablation Result
+| Input | Any AUC | Any AP |
+|---|---:|---:|
+| Multi-window | 0.945789 | 0.816036 |
+| Brain-only | 0.947194 | 0.815377 |
 
-| Input | AUC | AP | Recall ≥90% Threshold | Recall | Precision | Workload |
-|---|---:|---:|---:|---:|---:|---:|
-| Multi-window | 0.945789 | 0.816036 | 0.10 | 0.931526 | 0.402589 | 32.44% |
-| Brain-only | 0.947194 | 0.815377 | 0.60 | 0.904422 | 0.433356 | 29.26% |
-
-### Paired Bootstrap Ablation
+### 13.3 Paired Bootstrap Ablation
 
 | Metric | Multi-window Minus Brain-only | Bootstrap p-value |
 |---|---:|---:|
@@ -780,160 +673,231 @@ Interpretation:
 
 > Multi-window input did not show statistically meaningful improvement over brain-window-only input for slice-level any-hemorrhage triage.
 
-This is a valuable ablation result because it prevents overclaiming.
+This is a scientifically important negative result.
 
 ---
 
-## Triage Simulation
+## 14. Triage Simulation
 
-### ConvNeXt-Tiny Threshold 0.10
+### 14.1 High-Sensitivity Operating Point
 
-| Confusion Matrix Component | Count |
+For ConvNeXt-Tiny:
+
+```text
+Threshold = 0.10
+```
+
+| Metric | Value |
 |---|---:|
 | TP | 653 |
 | FP | 969 |
 | FN | 48 |
 | TN | 3330 |
-
-| Metric | Value |
-|---|---:|
 | Recall | 0.931526 |
-| Recall 95% CI | 0.912981 – 0.950071 |
 | Precision | 0.402589 |
-| Precision 95% CI | 0.389417 – 0.417873 |
 | False negative rate | 0.068474 |
-| False positive rate | 0.225401 |
-| Prioritized workload | 0.3244 |
+| Prioritized workload | 32.44% |
 
-Clinical-style interpretation:
+### 14.2 Clinical Workflow Interpretation
 
-> At threshold 0.10, ConvNeXt-Tiny captured 653 of 701 hemorrhage-positive images while prioritizing 32.44% of the workload.
+The model captured:
+
+```text
+653 / 701 hemorrhage-positive images
+```
+
+while prioritizing:
+
+```text
+32.44% of the CT workload
+```
+
+This supports the triage objective but does not establish clinical readiness.
 
 ---
 
-## Calibration Analysis
+## 15. Calibration Analysis
 
-ConvNeXt-Tiny calibration:
-
-| Metric | Value |
-|---|---:|
-| Brier score | 0.063986 |
-
-Generated calibration artifact:
+ConvNeXt-Tiny Brier score:
 
 ```text
-outputs/reports/calibration_curve_any_convnext_tiny_10000.csv
+0.063986
+```
+
+Calibration figure:
+
+```text
 outputs/figures/paper_metrics_convnext_tiny/calibration_curve_any_convnext_tiny_10000.png
 ```
 
-Interpretation:
-
-- Ranking performance is strong.
-- Calibration is measured but not yet optimized.
-- Future work should evaluate temperature scaling or isotonic regression.
+Calibration remains important because real triage workflows may depend on stable probability thresholds.
 
 ---
 
-## Error Analysis
+## 16. Error Analysis
 
-Error analysis was performed for the EfficientNet-B0 model at threshold 0.25 earlier in the project. The same structure can be extended to ConvNeXt-Tiny.
+Error analysis was performed to inspect:
 
-Existing error-analysis outputs:
+1. true positives;
+2. false positives;
+3. false negatives;
+4. true negatives;
+5. subtype-specific missed cases;
+6. probability distribution by error group.
 
-```text
-outputs/reports/error_analysis_summary_model10000_threshold025.json
-outputs/reports/error_analysis_public_summary_threshold025.csv
-outputs/reports/error_analysis_false_negative_subtype_summary_threshold025.csv
-outputs/figures/error_analysis/
-```
-
-Error analysis includes:
-
-- false-positive count;
-- false-negative count;
-- error-group probability distribution;
-- false-negative subtype summary;
-- confusion matrix.
-
-Recommended next improvement:
-
-> Regenerate the same error-analysis report specifically for ConvNeXt-Tiny at threshold 0.10.
+Public aggregate error-analysis figures are included. Private case-level CSV files with image IDs are intentionally excluded from GitHub.
 
 ---
 
-## Qualitative Explainability
+## 17. Qualitative Explainability
 
-Grad-CAM qualitative analysis was generated locally.
+Grad-CAM was generated locally for selected cases.
 
-Qualitative goals:
-
-| Case Type | Purpose |
-|---|---|
-| High-confidence true positive | Verify model attends to plausible hemorrhage regions |
-| False positive | Understand over-prioritization behavior |
-| False negative | Study missed hemorrhage-positive cases |
-| Low-score normal | Confirm normal cases receive low activation |
-
-Generated local files:
+Generated locally:
 
 ```text
 outputs/figures/gradcam_model10000/
 outputs/figures/paper_ready/figure_gradcam_composite_model10000.png
 outputs/figures/paper_ready/figure_gradcam_composite_model10000.pdf
-outputs/figures/paper_ready/figure_gradcam_cases_table.csv
 ```
 
-Important:
-
-> These CT-derived Grad-CAM figures are not uploaded publicly because they may be considered patient-derived medical visualizations.
-
-Public repository excludes these files.
+These files are not publicly embedded because they may contain patient-derived CT visualizations.
 
 ---
 
-## Generated Figures
+## 18. Embedded Figures for Q1-Style Review
 
-### Backbone Comparison
+### 18.1 Backbone Comparison Figures
 
-```text
-outputs/figures/model_comparison/backbone_any_auc_ap_comparison.png
-outputs/figures/model_comparison/backbone_per_label_auc_comparison.png
-outputs/figures/model_comparison/backbone_recall90_workload_comparison.png
-outputs/figures/model_comparison/backbone_triage_recall_curve.png
-```
+#### 18.1.1 Backbone AUC/AP Comparison
 
-### ConvNeXt-Tiny Paper Metrics
+![Backbone AUC/AP Comparison](outputs/figures/model_comparison/backbone_any_auc_ap_comparison.png)
 
-```text
-outputs/figures/paper_metrics_convnext_tiny/roc_curve_any_convnext_tiny_10000.png
-outputs/figures/paper_metrics_convnext_tiny/pr_curve_any_convnext_tiny_10000.png
-outputs/figures/paper_metrics_convnext_tiny/calibration_curve_any_convnext_tiny_10000.png
-outputs/figures/paper_metrics_convnext_tiny/per_label_auc_ap_convnext_tiny_10000.png
-outputs/figures/paper_metrics_convnext_tiny/confusion_matrix_any_triage_recall90_threshold_010.png
-outputs/figures/paper_metrics_convnext_tiny/confusion_matrix_any_best_f1_threshold_065.png
-```
+#### 18.1.2 Backbone Triage Recall Curve
 
-### Statistical Comparison
+![Backbone Triage Recall Curve](outputs/figures/model_comparison/backbone_triage_recall_curve.png)
 
-```text
-outputs/figures/statistical_comparison/paired_bootstrap_auc_ap_difference.png
-```
+#### 18.1.3 Backbone Per-Label AUC Comparison
 
-### Ablation Study
+![Backbone Per-Label AUC Comparison](outputs/figures/model_comparison/backbone_per_label_auc_comparison.png)
 
-```text
-outputs/figures/ablation_study/paired_bootstrap_multiwindow_vs_brainonly.png
-```
+#### 18.1.4 Workload Required for Recall ≥90%
 
-### Bootstrap CI
+![Backbone Recall90 Workload Comparison](outputs/figures/model_comparison/backbone_recall90_workload_comparison.png)
 
-```text
-outputs/figures/paper_metrics/bootstrap_ci_auc_ap_convnext_tiny_10000.png
-```
+### 18.2 ConvNeXt-Tiny Main Paper Figures
+
+#### 18.2.1 ROC Curve
+
+![ConvNeXt-Tiny ROC Curve](outputs/figures/paper_metrics_convnext_tiny/roc_curve_any_convnext_tiny_10000.png)
+
+#### 18.2.2 Precision-Recall Curve
+
+![ConvNeXt-Tiny PR Curve](outputs/figures/paper_metrics_convnext_tiny/pr_curve_any_convnext_tiny_10000.png)
+
+#### 18.2.3 Calibration Curve
+
+![ConvNeXt-Tiny Calibration Curve](outputs/figures/paper_metrics_convnext_tiny/calibration_curve_any_convnext_tiny_10000.png)
+
+#### 18.2.4 Per-Label AUC/AP
+
+![ConvNeXt-Tiny Per-Label AUC/AP](outputs/figures/paper_metrics_convnext_tiny/per_label_auc_ap_convnext_tiny_10000.png)
+
+#### 18.2.5 Confusion Matrix at High-Sensitivity Threshold 0.10
+
+![ConvNeXt-Tiny Triage Confusion Matrix](outputs/figures/paper_metrics_convnext_tiny/confusion_matrix_any_triage_recall90_threshold_010.png)
+
+#### 18.2.6 Confusion Matrix at Best-F1 Threshold 0.65
+
+![ConvNeXt-Tiny Best-F1 Confusion Matrix](outputs/figures/paper_metrics_convnext_tiny/confusion_matrix_any_best_f1_threshold_065.png)
+
+### 18.3 Bootstrap and Statistical Figures
+
+#### 18.3.1 ConvNeXt-Tiny Bootstrap CI
+
+![ConvNeXt-Tiny Bootstrap CI](outputs/figures/paper_metrics/bootstrap_ci_auc_ap_convnext_tiny_10000.png)
+
+#### 18.3.2 Paired Bootstrap Backbone Comparison
+
+![Paired Bootstrap Backbone Comparison](outputs/figures/statistical_comparison/paired_bootstrap_auc_ap_difference.png)
+
+### 18.4 Ablation Study Figure
+
+#### 18.4.1 Multi-Window vs Brain-Only Paired Bootstrap
+
+![Ablation Study Paired Bootstrap](outputs/figures/ablation_study/paired_bootstrap_multiwindow_vs_brainonly.png)
+
+### 18.5 Error Analysis Figures
+
+#### 18.5.1 Error Analysis Confusion Matrix
+
+![Error Analysis Confusion Matrix](outputs/figures/error_analysis/error_analysis_confusion_matrix_threshold025.png)
+
+#### 18.5.2 False Negative Rate by Subtype
+
+![False Negative Rate by Subtype](outputs/figures/error_analysis/false_negative_rate_by_subtype_threshold025.png)
+
+#### 18.5.3 Probability Distribution by Error Group
+
+![Probability Distribution by Error Group](outputs/figures/error_analysis/probability_distribution_by_error_group_threshold025.png)
+
+### 18.6 Supplementary EfficientNet-B0 Baseline Figures
+
+#### 18.6.1 EfficientNet-B0 ROC Curve
+
+![EfficientNet-B0 ROC Curve](outputs/figures/paper_metrics/roc_curve_any_model10000.png)
+
+#### 18.6.2 EfficientNet-B0 PR Curve
+
+![EfficientNet-B0 PR Curve](outputs/figures/paper_metrics/pr_curve_any_model10000.png)
+
+#### 18.6.3 EfficientNet-B0 Calibration Curve
+
+![EfficientNet-B0 Calibration Curve](outputs/figures/paper_metrics/calibration_curve_any_model10000.png)
+
+#### 18.6.4 EfficientNet-B0 Per-Label AUC/AP
+
+![EfficientNet-B0 Per-Label AUC/AP](outputs/figures/paper_metrics/per_label_auc_ap_model10000.png)
+
+#### 18.6.5 EfficientNet-B0 Triage Confusion Matrix
+
+![EfficientNet-B0 Triage Confusion Matrix](outputs/figures/paper_metrics/confusion_matrix_any_triage_recall90_threshold_025.png)
+
+#### 18.6.6 EfficientNet-B0 Best-F1 Confusion Matrix
+
+![EfficientNet-B0 Best-F1 Confusion Matrix](outputs/figures/paper_metrics/confusion_matrix_any_best_f1_threshold_090.png)
+
+#### 18.6.7 EfficientNet-B0 Bootstrap CI
+
+![EfficientNet-B0 Bootstrap CI](outputs/figures/paper_metrics/bootstrap_ci_auc_ap_model10000.png)
+
+### 18.7 Experiment Summary Figures
+
+#### 18.7.1 Model AUC/AP Comparison
+
+![Model AUC/AP Comparison](outputs/figures/experiment_summary/model_auc_ap_comparison.png)
+
+#### 18.7.2 Subtype AUC/AP Model 10000
+
+![Subtype AUC/AP](outputs/figures/experiment_summary/subtype_auc_ap_model10000.png)
+
+#### 18.7.3 Threshold Trade-Off
+
+![Threshold Trade-Off](outputs/figures/experiment_summary/threshold_tradeoff_model10000.png)
+
+#### 18.7.4 Triage Precision Curve
+
+![Triage Precision Curve](outputs/figures/experiment_summary/triage_precision_curve.png)
+
+#### 18.7.5 Triage Recall Curve
+
+![Triage Recall Curve](outputs/figures/experiment_summary/triage_recall_curve.png)
 
 ---
 
-## Generated Reports
+## 19. Generated Reports
+
+Key report files:
 
 ```text
 outputs/reports/backbone_comparison_holdout_5000.csv
@@ -942,18 +906,18 @@ outputs/reports/backbone_comparison_summary.md
 outputs/reports/bootstrap_ci_convnext_tiny_10000.csv
 outputs/reports/bootstrap_ci_convnext_tiny_10000.json
 outputs/reports/bootstrap_threshold_ci_any_convnext_tiny_10000.csv
-outputs/reports/paper_metrics_summary_convnext_tiny_10000.json
-outputs/reports/paper_metrics_per_label_auc_ap_convnext_tiny_10000.csv
-outputs/reports/calibration_curve_any_convnext_tiny_10000.csv
 outputs/reports/paired_bootstrap_backbone_comparison.csv
 outputs/reports/paired_bootstrap_backbone_comparison.json
 outputs/reports/paired_bootstrap_ablation_multiwindow_vs_brainonly.csv
 outputs/reports/paired_bootstrap_ablation_multiwindow_vs_brainonly.json
+outputs/reports/paper_metrics_summary_convnext_tiny_10000.json
+outputs/reports/calibration_curve_any_convnext_tiny_10000.csv
+outputs/reports/paper_metrics_per_label_auc_ap_convnext_tiny_10000.csv
 ```
 
 ---
 
-## Repository Structure
+## 20. Repository Structure
 
 ```text
 ai-ct-hemorrhage-triage/
@@ -962,39 +926,24 @@ ai-ct-hemorrhage-triage/
 ├── .gitignore
 ├── src/
 │   ├── datasets/
-│   │   └── rsna_dataset.py
 │   ├── models/
-│   │   └── classifier.py
 │   ├── preprocessing/
-│   │   └── dicom_utils.py
 │   ├── evaluation/
 │   ├── training/
 │   ├── visualization/
 │   └── utils/
 ├── scripts/
-│   ├── check_gpu.py
-│   ├── check_imports.py
-│   ├── test_ct_windowing.py
-│   ├── prepare_rsna_labels.py
-│   ├── inspect_rsna_zip.py
-│   ├── extract_rsna_train_10000.py
-│   ├── extract_rsna_holdout_5000.py
 │   ├── train_baseline_10000.py
 │   ├── train_densenet121_10000.py
 │   ├── train_convnext_tiny_10000.py
 │   ├── train_convnext_tiny_brain_only_10000.py
-│   ├── evaluate_holdout_5000_model10000.py
-│   ├── evaluate_holdout_5000_densenet121.py
 │   ├── evaluate_holdout_5000_convnext_tiny.py
-│   ├── evaluate_holdout_5000_convnext_tiny_brain_only.py
 │   ├── generate_backbone_comparison_report.py
 │   ├── generate_paper_metrics_figures_convnext_tiny.py
 │   ├── bootstrap_confidence_intervals_convnext_tiny.py
 │   ├── paired_bootstrap_backbone_comparison.py
 │   ├── paired_bootstrap_ablation_multiwindow_vs_brainonly.py
-│   ├── error_analysis_model10000.py
-│   ├── generate_manuscript_draft.py
-│   └── update_manuscript_with_stats_ablation.py
+│   └── generate_manuscript_draft.py
 ├── outputs/
 │   ├── figures/
 │   ├── logs/
@@ -1009,40 +958,35 @@ ai-ct-hemorrhage-triage/
 
 ---
 
-## Reproducibility Workflow
+## 21. Reproducibility Workflow
 
-### 1. Activate Environment
+### 21.1 Environment
 
 ```powershell
 conda activate main
-```
-
-### 2. Install Dependencies
-
-```powershell
 pip install -r requirements.txt
 ```
 
-### 3. Download RSNA Dataset
+### 21.2 Dataset Download
 
 ```powershell
 kaggle competitions download -c rsna-intracranial-hemorrhage-detection -p data\raw\rsna
 ```
 
-### 4. Prepare Labels
+### 21.3 Label Preparation
 
 ```powershell
 python scripts\prepare_rsna_labels.py
 ```
 
-### 5. Extract Training and Holdout DICOMs
+### 21.4 Data Extraction
 
 ```powershell
 python scripts\extract_rsna_train_10000.py
 python scripts\extract_rsna_holdout_5000.py
 ```
 
-### 6. Train Backbones
+### 21.5 Model Training
 
 ```powershell
 python scripts\train_baseline_10000.py
@@ -1051,7 +995,7 @@ python scripts\train_convnext_tiny_10000.py
 python scripts\train_convnext_tiny_brain_only_10000.py
 ```
 
-### 7. Evaluate Backbones
+### 21.6 Evaluation
 
 ```powershell
 python scripts\evaluate_holdout_5000_model10000.py
@@ -1060,7 +1004,7 @@ python scripts\evaluate_holdout_5000_convnext_tiny.py
 python scripts\evaluate_holdout_5000_convnext_tiny_brain_only.py
 ```
 
-### 8. Generate Reports
+### 21.7 Report Generation
 
 ```powershell
 python scripts\generate_backbone_comparison_report.py
@@ -1072,176 +1016,139 @@ python scripts\paired_bootstrap_ablation_multiwindow_vs_brainonly.py
 
 ---
 
-## GitHub Data Governance
+## 22. GitHub Data Governance
 
-### Uploaded to GitHub
+### 22.1 Included in GitHub
 
-Allowed:
+This repository includes:
 
-- source code;
-- scripts;
-- aggregate metrics;
-- aggregate CSV reports;
-- aggregate figures;
-- manuscript files;
-- README;
-- requirements;
-- `.gitignore`.
+1. source code;
+2. training scripts;
+3. evaluation scripts;
+4. aggregate metrics;
+5. public-safe aggregate figures;
+6. paper draft;
+7. statistical summaries.
 
-### Not Uploaded to GitHub
+### 22.2 Excluded from GitHub
 
-Excluded:
+This repository intentionally excludes:
 
-- `data/`
-- raw DICOM files;
-- RSNA zip archive;
-- trained checkpoints;
-- prediction CSV files with image identifiers;
-- patient-derived CT visualizations;
-- Grad-CAM overlays;
-- large medical image artifacts.
+1. raw DICOM files;
+2. RSNA zip files;
+3. model checkpoints;
+4. prediction CSV files with image-level identifiers;
+5. patient-derived Grad-CAM CT overlays;
+6. processed medical images.
 
-This is intentional for ethical and data governance reasons.
+This is controlled through `.gitignore`.
 
 ---
 
-## Q1-Readiness Assessment
+## 23. Q1-Readiness Assessment
 
-### Already Strong
+### 23.1 Completed
 
-| Item | Status |
-|---|---|
-| Reproducible code | Strong |
-| Natural-prevalence holdout | Strong |
-| Multiple model backbones | Strong |
-| Statistical comparison | Strong |
-| Bootstrap confidence intervals | Strong |
-| Ablation study | Strong |
-| Calibration analysis | Present |
-| Error analysis | Present |
-| Explainability | Present locally |
-| Manuscript draft | Present |
-| GitHub-safe repository | Present |
+- [x] DICOM preprocessing
+- [x] HU conversion
+- [x] CT windowing
+- [x] Natural-prevalence holdout
+- [x] EfficientNet-B0 baseline
+- [x] DenseNet121 baseline
+- [x] ConvNeXt-Tiny baseline
+- [x] Brain-only ablation
+- [x] Bootstrap confidence interval
+- [x] Paired bootstrap backbone comparison
+- [x] Paired bootstrap ablation comparison
+- [x] Calibration curve
+- [x] Brier score
+- [x] Error analysis
+- [x] Manuscript draft
+- [x] GitHub-safe public repo
 
-### Still Needed
+### 23.2 Still Needed
 
-| Item | Current Status | Importance |
-|---|---|---|
-| External validation | Missing | Very high |
-| Patient-level aggregation | Missing | Very high |
-| Study-level evaluation | Missing | Very high |
-| ConvNeXt-specific error analysis | Partially missing | Medium-high |
-| Calibration improvement | Missing | Medium-high |
-| Journal formatting | Missing | Medium |
-| Formal ethics statement | Needs polishing | Medium |
-| Radiologist review | Missing | High |
-
----
-
-## Remaining Gaps Before Serious Q1 Submission
-
-To improve the chance of Q1-level acceptance, the next steps should be:
-
-1. **External validation**
-   - Validate on a different institutional dataset.
-
-2. **Patient-level aggregation**
-   - Aggregate slice predictions to study-level probability.
-
-3. **Calibration optimization**
-   - Apply temperature scaling or isotonic regression.
-
-4. **ConvNeXt-specific error analysis**
-   - Generate false positive / false negative analysis at threshold 0.10.
-
-5. **Expanded ablation**
-   - pretrained vs non-pretrained;
-   - full dataset vs 10k subset;
-   - natural-prevalence training vs balanced training.
-
-6. **Radiologist qualitative review**
-   - Expert review of Grad-CAM examples.
-
-7. **Manuscript polishing**
-   - Journal target selection;
-   - professional English editing;
-   - reference formatting;
-   - ethics/data availability statement.
+- [ ] External validation
+- [ ] Patient-level aggregation
+- [ ] Study-level triage simulation
+- [ ] Calibration improvement
+- [ ] Radiologist review of qualitative cases
+- [ ] Full academic editing
+- [ ] Journal-specific formatting
 
 ---
 
-## Limitations
+## 24. Remaining Gaps Before Strong Q1 Submission
 
-1. **Slice-level evaluation**  
-   The current model evaluates individual images/slices, not complete CT studies.
+The largest remaining scientific gaps are:
 
-2. **Internal dataset holdout**  
-   The holdout set is sampled from the RSNA dataset, not an external institution.
+1. **External validation**  
+   Current holdout is internal to RSNA.
 
-3. **No prospective validation**  
-   Workflow improvement is simulated, not tested prospectively.
+2. **Patient-level aggregation**  
+   Current model is slice-level.
 
-4. **Rare subtype instability**  
-   Epidural hemorrhage has only 17 positive holdout examples.
+3. **Prospective workflow validation**  
+   Current triage impact is simulated.
 
-5. **Calibration not optimized**  
-   Brier score and calibration curve were reported, but calibration was not improved.
+4. **Calibration optimization**  
+   Calibration is measured but not improved.
 
-6. **Grad-CAM is qualitative**  
-   Grad-CAM should not be treated as causal or definitive localization.
-
-7. **Not a clinical product**  
-   This model is a research prototype only.
+5. **Clinical expert review**  
+   Grad-CAM and failure cases should be reviewed by radiologists.
 
 ---
 
-## Future Work
+## 25. Limitations
 
-Recommended next development sequence:
-
-1. Generate ConvNeXt-specific error analysis.
-2. Add patient-level aggregation.
-3. Add external validation.
-4. Add calibration optimization.
-5. Add inference latency benchmarking.
-6. Add study-level triage simulation.
-7. Compare with transformer-based architectures.
-8. Expand training to larger RSNA subsets.
-9. Conduct radiologist review of model outputs.
-10. Prepare journal-specific manuscript.
+1. Slice-level evaluation only.
+2. Internal RSNA holdout only.
+3. No external hospital validation.
+4. No prospective clinical workflow test.
+5. Rare subtype AP is unstable, especially epidural due to only 17 positive holdout cases.
+6. Grad-CAM is qualitative, not causal evidence.
+7. The model is not a medical device.
 
 ---
 
-## Medical and Ethical Disclaimer
+## 26. Future Work
 
-This repository is for **research and education only**.
-
-The model:
-
-- is not clinically validated;
-- is not regulatory-approved;
-- is not a medical device;
-- must not be used for diagnosis;
-- must not be used for treatment decisions;
-- must not replace radiologist interpretation.
-
-Any clinical use requires:
-
-- institutional approval;
-- ethical review;
-- external validation;
-- prospective evaluation;
-- clinical safety assessment;
-- regulatory review.
+1. External validation on independent hospital data.
+2. Patient-level aggregation.
+3. Study-level triage simulation.
+4. Temperature scaling or isotonic calibration.
+5. Full RSNA-scale training.
+6. Transformer and hybrid architecture comparison.
+7. Radiologist-in-the-loop evaluation.
+8. Prospective workflow trial.
+9. Deployment latency analysis.
+10. Journal-formatted manuscript preparation.
 
 ---
 
-## Suggested Citation
+## 27. Medical and Ethical Disclaimer
+
+This repository is for **research and educational purposes only**.
+
+The model is:
+
+- not clinically validated;
+- not regulatory approved;
+- not a medical device;
+- not intended for diagnosis;
+- not intended for patient management;
+- not a replacement for radiologists.
+
+Clinical translation requires institutional review, external validation, prospective evaluation, and regulatory assessment.
+
+---
+
+## 28. Suggested Citation
 
 ```bibtex
 @misc{rizal2026convnext_ich_triage,
   title={Explainable ConvNeXt-Based Triage of Intracranial Hemorrhage on Head CT: Natural-Prevalence Evaluation, Paired Statistical Backbone Comparison, and CT Window Ablation},
-  author={Rizal},
+  author={Rizal Fanex},
   year={2026},
   note={Research prototype and reproducible GitHub implementation}
 }
@@ -1249,50 +1156,34 @@ Any clinical use requires:
 
 ---
 
-## References
+## 29. References
 
-1. Radiological Society of North America. **RSNA Intracranial Hemorrhage Detection Challenge**, 2019.  
-   https://www.rsna.org/artificial-intelligence/ai-image-challenge/rsna-intracranial-hemorrhage-detection-challenge-2019
+1. Flanders AE, Prevedello LM, Shih G, et al. **Construction of a Machine Learning Dataset through Collaboration: The RSNA 2019 Brain CT Hemorrhage Challenge.** *Radiology: Artificial Intelligence*, 2020.  
+   <https://pubmed.ncbi.nlm.nih.gov/33937827/>
 
-2. Kaggle. **RSNA Intracranial Hemorrhage Detection**.  
-   https://www.kaggle.com/competitions/rsna-intracranial-hemorrhage-detection
+2. RSNA. **RSNA Intracranial Hemorrhage Detection Challenge.**  
+   <https://www.rsna.org/artificial-intelligence/ai-image-challenge/rsna-intracranial-hemorrhage-detection-challenge-2019>
 
-3. Tan M, Le QV. **EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks**. ICML, 2019.  
-   https://arxiv.org/abs/1905.11946
+3. Wang X, Shen T, Yang S, et al. **A deep learning algorithm for automatic detection and classification of acute intracranial hemorrhages in head CT scans.** *NeuroImage: Clinical*, 2021.  
+   <https://pmc.ncbi.nlm.nih.gov/articles/PMC8377493/>
 
-4. Huang G, Liu Z, Van Der Maaten L, Weinberger KQ. **Densely Connected Convolutional Networks**. CVPR, 2017.  
-   https://arxiv.org/abs/1608.06993
+4. Chilamkurthy S, Ghosh R, Tanamala S, et al. **Deep learning algorithms for detection of critical findings in head CT scans.** *The Lancet*, 2018.  
+   <https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(18)31645-3/abstract>
 
-5. Liu Z, Mao H, Wu C-Y, Feichtenhofer C, Darrell T, Xie S. **A ConvNet for the 2020s**. CVPR, 2022.  
-   https://openaccess.thecvf.com/content/CVPR2022/html/Liu_A_ConvNet_for_the_2020s_CVPR_2022_paper.html
+5. Tan M, Le QV. **EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks.** ICML, 2019.  
+   <https://arxiv.org/abs/1905.11946>
 
-6. Selvaraju RR, Cogswell M, Das A, Vedantam R, Parikh D, Batra D. **Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization**. ICCV, 2017.  
-   https://arxiv.org/abs/1610.02391
+6. Huang G, Liu Z, van der Maaten L, Weinberger KQ. **Densely Connected Convolutional Networks.** CVPR, 2017.  
+   <https://arxiv.org/abs/1608.06993>
 
-7. Wang X et al. **A deep learning algorithm for automatic detection and classification of acute intracranial hemorrhages in head CT scans**. 2021.  
-   https://www.sciencedirect.com/science/article/pii/S2213158221002291
+7. Liu Z, Mao H, Wu C-Y, Feichtenhofer C, Darrell T, Xie S. **A ConvNet for the 2020s.** CVPR, 2022.  
+   <https://openaccess.thecvf.com/content/CVPR2022/html/Liu_A_ConvNet_for_the_2020s_CVPR_2022_paper.html>
 
-8. Salehinejad H et al. **Intracranial Hemorrhage Detection on Head CT**. 2021.  
-   https://arxiv.org/pdf/2102.04869
+8. Selvaraju RR, Cogswell M, Das A, Vedantam R, Parikh D, Batra D. **Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization.** ICCV, 2017.  
+   <https://arxiv.org/abs/1610.02391>
 
-9. Cortés-Ferre L et al. **Deep Learning Applied to Intracranial Hemorrhage Detection**. 2023.  
-   https://pmc.ncbi.nlm.nih.gov/articles/PMC9963867/
+9. Nguyen NT, Tran DQ, Nguyen NT, Nguyen HQ. **A CNN-LSTM Architecture for Detection of Intracranial Hemorrhage on CT scans.** 2020.  
+   <https://arxiv.org/abs/2005.10992>
 
-10. Lee S et al. **Emergency triage of brain computed tomography via anomaly detection with a deep generative model**. Nature Communications, 2022.  
-    https://www.nature.com/articles/s41467-022-31808-0
-
-11. Choi SY et al. **Impact of a deep learning-based brain CT interpretation algorithm in a simulated clinical environment**. Scientific Reports, 2024.  
-    https://www.nature.com/articles/s41598-024-73589-0
-
-12. Karamian A et al. **Diagnostic Accuracy of Deep Learning for Intracranial Hemorrhage Detection on Non-Contrast CT: A Meta-Analysis**. 2025.  
-    https://pmc.ncbi.nlm.nih.gov/articles/PMC11989428/
-
----
-
-## Final Research Statement
-
-This repository is a complete research package for AI-assisted intracranial hemorrhage triage on head CT images. The current best main backbone, ConvNeXt-Tiny, achieved strong natural-prevalence holdout performance with statistically supported superiority over EfficientNet-B0 and DenseNet121.
-
-The CT window ablation showed that brain-window-only input performs comparably to multi-window input for the slice-level any-hemorrhage endpoint, which is an important honest finding for manuscript discussion.
-
-The project is not yet a clinically deployable system, but it is a strong Q1-oriented research foundation. The next critical steps are external validation, patient-level aggregation, calibration improvement, and expert clinical review.
+10. Chen YR, Chen CC, Kuo CF, Lin CH. **An efficient deep neural network for automatic classification of acute intracranial hemorrhages in brain CT scans.** *Computers in Biology and Medicine*, 2024.  
+   <https://doi.org/10.1016/j.compbiomed.2024.108587>
