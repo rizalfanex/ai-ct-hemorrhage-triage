@@ -1,0 +1,103 @@
+{
+  "n_bootstrap": 2000,
+  "random_state": 2026,
+  "holdout_size": 5000,
+  "positive_count": 701,
+  "negative_count": 4299,
+  "point_metrics": {
+    "EfficientNet-B0": {
+      "auc": 0.9164457514088636,
+      "average_precision": 0.7097307273631884
+    },
+    "DenseNet121": {
+      "auc": 0.9364761204128352,
+      "average_precision": 0.7815546469517965
+    },
+    "ConvNeXt-Tiny": {
+      "auc": 0.9457890714723491,
+      "average_precision": 0.816036290036051
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "ConvNeXt-Tiny - DenseNet121",
+      "model_a": "ConvNeXt-Tiny",
+      "model_b": "DenseNet121",
+      "metric": "auc",
+      "model_a_value": 0.9457890714723491,
+      "model_b_value": 0.9364761204128352,
+      "difference": 0.009312951059513908,
+      "difference_ci_low": 0.0018399511680220672,
+      "difference_ci_high": 0.01648203692661167,
+      "bootstrap_p_value": 0.009,
+      "n_bootstrap": 2000
+    },
+    {
+      "comparison": "ConvNeXt-Tiny - DenseNet121",
+      "model_a": "ConvNeXt-Tiny",
+      "model_b": "DenseNet121",
+      "metric": "average_precision",
+      "model_a_value": 0.816036290036051,
+      "model_b_value": 0.7815546469517965,
+      "difference": 0.0344816430842545,
+      "difference_ci_low": 0.017093674296739858,
+      "difference_ci_high": 0.051271819295751905,
+      "bootstrap_p_value": 0.0,
+      "n_bootstrap": 2000
+    },
+    {
+      "comparison": "ConvNeXt-Tiny - EfficientNet-B0",
+      "model_a": "ConvNeXt-Tiny",
+      "model_b": "EfficientNet-B0",
+      "metric": "auc",
+      "model_a_value": 0.9457890714723491,
+      "model_b_value": 0.9164457514088636,
+      "difference": 0.0293433200634855,
+      "difference_ci_low": 0.019851056826074055,
+      "difference_ci_high": 0.039057319835850764,
+      "bootstrap_p_value": 0.0,
+      "n_bootstrap": 2000
+    },
+    {
+      "comparison": "ConvNeXt-Tiny - EfficientNet-B0",
+      "model_a": "ConvNeXt-Tiny",
+      "model_b": "EfficientNet-B0",
+      "metric": "average_precision",
+      "model_a_value": 0.816036290036051,
+      "model_b_value": 0.7097307273631884,
+      "difference": 0.10630556267286262,
+      "difference_ci_low": 0.08127633502825954,
+      "difference_ci_high": 0.1320753656518872,
+      "bootstrap_p_value": 0.0,
+      "n_bootstrap": 2000
+    },
+    {
+      "comparison": "DenseNet121 - EfficientNet-B0",
+      "model_a": "DenseNet121",
+      "model_b": "EfficientNet-B0",
+      "metric": "auc",
+      "model_a_value": 0.9364761204128352,
+      "model_b_value": 0.9164457514088636,
+      "difference": 0.020030369003971593,
+      "difference_ci_low": 0.011075573591576095,
+      "difference_ci_high": 0.0294478835770785,
+      "bootstrap_p_value": 0.0,
+      "n_bootstrap": 2000
+    },
+    {
+      "comparison": "DenseNet121 - EfficientNet-B0",
+      "model_a": "DenseNet121",
+      "model_b": "EfficientNet-B0",
+      "metric": "average_precision",
+      "model_a_value": 0.7815546469517965,
+      "model_b_value": 0.7097307273631884,
+      "difference": 0.07182391958860812,
+      "difference_ci_low": 0.04623791491885945,
+      "difference_ci_high": 0.09787534453630883,
+      "bootstrap_p_value": 0.0,
+      "n_bootstrap": 2000
+    }
+  ],
+  "output_csv": "outputs\\reports\\paired_bootstrap_backbone_comparison.csv",
+  "figure": "outputs\\figures\\statistical_comparison\\paired_bootstrap_auc_ap_difference.png"
+}
