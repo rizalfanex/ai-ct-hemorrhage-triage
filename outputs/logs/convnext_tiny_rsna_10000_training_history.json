@@ -1,0 +1,554 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 0.9381372609138489,
+    "val_loss": 0.8431858859062195,
+    "any_auc": 0.7971575,
+    "any_average_precision": 0.7772212725069119,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.7971575,
+        "average_precision": 0.7772212725069119,
+        "precision": 0.6671802773497689,
+        "recall": 0.866,
+        "f1": 0.7536988685813751
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.6329537528837383,
+        "average_precision": 0.025278185092205144,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.7698308898699548,
+        "average_precision": 0.38319933128976036,
+        "precision": 0.2520242914979757,
+        "recall": 0.8006430868167203,
+        "f1": 0.3833718244803695
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.8826766761712407,
+        "average_precision": 0.5426233605016901,
+        "precision": 0.5,
+        "recall": 0.543859649122807,
+        "f1": 0.5210084033613446
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.6508803538658329,
+        "average_precision": 0.2626203830762816,
+        "precision": 0.22054140127388536,
+        "recall": 0.8075801749271136,
+        "f1": 0.3464665415884928
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.7008630103567051,
+        "average_precision": 0.35266344392857985,
+        "precision": 0.28996539792387543,
+        "recall": 0.9479638009049773,
+        "f1": 0.4440911499735029
+      }
+    }
+  },
+  {
+    "epoch": 2,
+    "train_loss": 0.75618430352211,
+    "val_loss": 0.69989786195755,
+    "any_auc": 0.8972555000000001,
+    "any_average_precision": 0.904762002407258,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.8972555000000001,
+        "average_precision": 0.904762002407258,
+        "precision": 0.8764186633039092,
+        "recall": 0.695,
+        "f1": 0.7752370329057445
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.7625744406888781,
+        "average_precision": 0.09627738262515605,
+        "precision": 0.16666666666666666,
+        "recall": 0.13157894736842105,
+        "f1": 0.14705882352941177
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9067019621953286,
+        "average_precision": 0.7014723065515398,
+        "precision": 0.5397849462365591,
+        "recall": 0.8070739549839229,
+        "f1": 0.6469072164948454
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9410097619896243,
+        "average_precision": 0.7309169790645889,
+        "precision": 0.4391891891891892,
+        "recall": 0.8552631578947368,
+        "f1": 0.5803571428571429
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8096361227480905,
+        "average_precision": 0.5108417078930478,
+        "precision": 0.3953488372093023,
+        "recall": 0.6938775510204082,
+        "f1": 0.5037037037037037
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.7670002730034444,
+        "average_precision": 0.4821971907034356,
+        "precision": 0.42424242424242425,
+        "recall": 0.6334841628959276,
+        "f1": 0.5081669691470054
+      }
+    }
+  },
+  {
+    "epoch": 3,
+    "train_loss": 0.6347781553268432,
+    "val_loss": 0.622160719871521,
+    "any_auc": 0.9195034999999999,
+    "any_average_precision": 0.9261139034681979,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9195034999999999,
+        "average_precision": 0.9261139034681979,
+        "precision": 0.8443051201671892,
+        "recall": 0.808,
+        "f1": 0.8257537046499744
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.8828196255163904,
+        "average_precision": 0.14872737102011244,
+        "precision": 0.0611439842209073,
+        "recall": 0.8157894736842105,
+        "f1": 0.11376146788990826
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9285760519647652,
+        "average_precision": 0.8062955448494916,
+        "precision": 0.49355432780847147,
+        "recall": 0.8617363344051447,
+        "f1": 0.6276346604215457
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9444192804245377,
+        "average_precision": 0.7584972256155963,
+        "precision": 0.4923469387755102,
+        "recall": 0.8464912280701754,
+        "f1": 0.6225806451612903
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8283006451998852,
+        "average_precision": 0.5835832043356013,
+        "precision": 0.4573304157549234,
+        "recall": 0.60932944606414,
+        "f1": 0.5225
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.8360926527221928,
+        "average_precision": 0.6051332370919833,
+        "precision": 0.4250871080139373,
+        "recall": 0.8280542986425339,
+        "f1": 0.5617805065234075
+      }
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 0.5439240682721138,
+    "val_loss": 0.5704720659255982,
+    "any_auc": 0.9278410000000001,
+    "any_average_precision": 0.9337267015134023,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9278410000000001,
+        "average_precision": 0.9337267015134023,
+        "precision": 0.882750845546787,
+        "recall": 0.783,
+        "f1": 0.8298887122416534
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.8882316647888835,
+        "average_precision": 0.19516935269107616,
+        "precision": 0.12878787878787878,
+        "recall": 0.4473684210526316,
+        "f1": 0.2
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9381128885792122,
+        "average_precision": 0.8178628169344023,
+        "precision": 0.5627705627705628,
+        "recall": 0.8360128617363344,
+        "f1": 0.6727037516170763
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9552666231040357,
+        "average_precision": 0.8068936922036976,
+        "precision": 0.4843373493975904,
+        "recall": 0.881578947368421,
+        "f1": 0.6251944012441679
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8640716740183443,
+        "average_precision": 0.6572281804666599,
+        "precision": 0.4667931688804554,
+        "recall": 0.717201166180758,
+        "f1": 0.5655172413793104
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.8509604493520526,
+        "average_precision": 0.6619934225898216,
+        "precision": 0.5244299674267101,
+        "recall": 0.7285067873303167,
+        "f1": 0.6098484848484849
+      }
+    }
+  },
+  {
+    "epoch": 5,
+    "train_loss": 0.4581683837771416,
+    "val_loss": 0.6376928272247314,
+    "any_auc": 0.9304870000000001,
+    "any_average_precision": 0.9374352679721466,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9304870000000001,
+        "average_precision": 0.9374352679721466,
+        "precision": 0.9129886506935687,
+        "recall": 0.724,
+        "f1": 0.807585052983826
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.8607422608509039,
+        "average_precision": 0.18316943195058563,
+        "precision": 0.09745762711864407,
+        "recall": 0.6052631578947368,
+        "f1": 0.1678832116788321
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9364214065287209,
+        "average_precision": 0.8313355297397386,
+        "precision": 0.6195121951219512,
+        "recall": 0.8167202572347267,
+        "f1": 0.7045769764216366
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9547443665597403,
+        "average_precision": 0.82388812484372,
+        "precision": 0.48655256723716384,
+        "recall": 0.8728070175438597,
+        "f1": 0.6248037676609105
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8644358855707126,
+        "average_precision": 0.6617612244939142,
+        "precision": 0.6139817629179332,
+        "recall": 0.5889212827988338,
+        "f1": 0.6011904761904762
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.8486086989352866,
+        "average_precision": 0.6663077717997381,
+        "precision": 0.5356489945155393,
+        "recall": 0.6628959276018099,
+        "f1": 0.5925176946410515
+      }
+    }
+  },
+  {
+    "epoch": 6,
+    "train_loss": 0.35975463879108427,
+    "val_loss": 0.7049652762413025,
+    "any_auc": 0.9279905,
+    "any_average_precision": 0.9356705694111641,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9279905,
+        "average_precision": 0.9356705694111641,
+        "precision": 0.9168704156479217,
+        "recall": 0.75,
+        "f1": 0.8250825082508251
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.899793443854284,
+        "average_precision": 0.21352390699321366,
+        "precision": 0.16981132075471697,
+        "recall": 0.47368421052631576,
+        "f1": 0.25
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9276041874889345,
+        "average_precision": 0.8105295635815215,
+        "precision": 0.6544502617801047,
+        "recall": 0.8038585209003215,
+        "f1": 0.7215007215007215
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9454736941111243,
+        "average_precision": 0.8107337595939744,
+        "precision": 0.728448275862069,
+        "recall": 0.7412280701754386,
+        "f1": 0.7347826086956522
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.882203954950374,
+        "average_precision": 0.6865381277778798,
+        "precision": 0.6022727272727273,
+        "recall": 0.6180758017492711,
+        "f1": 0.6100719424460431
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.8740168971706388,
+        "average_precision": 0.7227363767367395,
+        "precision": 0.6046511627906976,
+        "recall": 0.7058823529411765,
+        "f1": 0.651356993736952
+      }
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 0.29183741545677183,
+    "val_loss": 0.6864049229621887,
+    "any_auc": 0.9245915000000001,
+    "any_average_precision": 0.9343327371823252,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9245915000000001,
+        "average_precision": 0.9343327371823252,
+        "precision": 0.8463796477495108,
+        "recall": 0.865,
+        "f1": 0.8555885262116716
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.8604941252213101,
+        "average_precision": 0.16192354046246632,
+        "precision": 0.17647058823529413,
+        "recall": 0.23684210526315788,
+        "f1": 0.20224719101123595
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.9332526143249589,
+        "average_precision": 0.8235619284387341,
+        "precision": 0.6339522546419099,
+        "recall": 0.7684887459807074,
+        "f1": 0.6947674418604651
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9493077006851214,
+        "average_precision": 0.8224674901910674,
+        "precision": 0.6804511278195489,
+        "recall": 0.793859649122807,
+        "f1": 0.7327935222672065
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8577305221597218,
+        "average_precision": 0.666029157211363,
+        "precision": 0.5508684863523573,
+        "recall": 0.6472303206997084,
+        "f1": 0.5951742627345844
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.8723933979635106,
+        "average_precision": 0.7187465893960628,
+        "precision": 0.47265625,
+        "recall": 0.8212669683257918,
+        "f1": 0.6
+      }
+    }
+  },
+  {
+    "epoch": 8,
+    "train_loss": 0.21414922922849655,
+    "val_loss": 0.8015226941108704,
+    "any_auc": 0.9283915,
+    "any_average_precision": 0.9382175190632155,
+    "per_label": {
+      "any": {
+        "label": "any",
+        "positive_count": 1000,
+        "negative_count": 1000,
+        "auc": 0.9283915,
+        "average_precision": 0.9382175190632155,
+        "precision": 0.8351012536162006,
+        "recall": 0.866,
+        "f1": 0.8502700049091801
+      },
+      "epidural": {
+        "label": "epidural",
+        "positive_count": 38,
+        "negative_count": 1962,
+        "auc": 0.8529762862814528,
+        "average_precision": 0.2226720620224756,
+        "precision": 0.23728813559322035,
+        "recall": 0.3684210526315789,
+        "f1": 0.28865979381443296
+      },
+      "intraparenchymal": {
+        "label": "intraparenchymal",
+        "positive_count": 311,
+        "negative_count": 1689,
+        "auc": 0.927782188132402,
+        "average_precision": 0.7899401056961265,
+        "precision": 0.5804988662131519,
+        "recall": 0.8231511254019293,
+        "f1": 0.6808510638297872
+      },
+      "intraventricular": {
+        "label": "intraventricular",
+        "positive_count": 228,
+        "negative_count": 1772,
+        "auc": 0.9455553740445922,
+        "average_precision": 0.7744692068764343,
+        "precision": 0.46697038724373574,
+        "recall": 0.8991228070175439,
+        "f1": 0.6146926536731634
+      },
+      "subarachnoid": {
+        "label": "subarachnoid",
+        "positive_count": 343,
+        "negative_count": 1657,
+        "auc": 0.8654299895663067,
+        "average_precision": 0.675413894763687,
+        "precision": 0.41512345679012347,
+        "recall": 0.7842565597667639,
+        "f1": 0.5428859737638748
+      },
+      "subdural": {
+        "label": "subdural",
+        "positive_count": 442,
+        "negative_count": 1558,
+        "auc": 0.871606334841629,
+        "average_precision": 0.7082945410836063,
+        "precision": 0.5678119349005425,
+        "recall": 0.7104072398190046,
+        "f1": 0.6311557788944724
+      }
+    }
+  }
+]

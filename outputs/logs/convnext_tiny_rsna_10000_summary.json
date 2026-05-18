@@ -1,0 +1,13 @@
+{
+  "experiment_name": "convnext_tiny_rsna_10000",
+  "model_name": "convnext_tiny",
+  "epochs": 8,
+  "image_size": 224,
+  "batch_size": 32,
+  "learning_rate": 0.0001,
+  "best_any_auc": 0.9304870000000001,
+  "training_time_seconds": 1145.25,
+  "parameters": 27824742,
+  "best_checkpoint": "outputs\\models\\best_convnext_tiny_rsna_10000.pt",
+  "last_checkpoint": "outputs\\models\\last_convnext_tiny_rsna_10000.pt"
+}
